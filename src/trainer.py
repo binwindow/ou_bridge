@@ -32,11 +32,21 @@ def set_seed(seed: int):
 class Trainer:
     def __init__(self, config: ExperimentConfig):
         self.config = config
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.use_ddp = config.train.use_ddp
+
+        # GPU selection: CUDA_VISIBLE_DEVICES limits visible devices;
+        # local_rank then indexes into the visible set (0 → first visible GPU).
+        if not self.use_ddp:
+            os.environ["CUDA_VISIBLE_DEVICES"] = config.train.gpu
+
+        if torch.cuda.is_available():
+            self.device = torch.device("cuda:0")
+        else:
+            self.device = torch.device("cpu")
+
         self.local_rank = 0
 
         # DDP setup
-        self.use_ddp = config.train.use_ddp
         if self.use_ddp:
             self.local_rank = int(os.environ.get("LOCAL_RANK", 0))
             torch.cuda.set_device(self.local_rank)

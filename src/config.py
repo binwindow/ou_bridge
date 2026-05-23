@@ -33,6 +33,7 @@ class TrainConfig:
     beta2: float = 0.99
     ema_beta: float = 0.999
     ema_update_every: int = 1
+    gpu: str = "0"
     use_amp: bool = True
     use_ddp: bool = False
     seed: int = 42

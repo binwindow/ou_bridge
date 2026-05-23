@@ -24,6 +24,7 @@ def parse_args():
     parser.add_argument("--batch_size", type=int, default=8)
     parser.add_argument("--patch_size", type=int, default=64)
     parser.add_argument("--lr", type=float, default=1e-4)
+    parser.add_argument("--gpu", type=str, default="0")
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--num_val", type=int, default=15)
     parser.add_argument("--dataset", type=str, default="default")
@@ -43,6 +44,7 @@ def main():
     config.train.batch_size = args.batch_size
     config.train.patch_size = args.patch_size
     config.train.lr = args.lr
+    config.train.gpu = args.gpu
     config.train.seed = args.seed
     config.train.num_val = args.num_val
     config.data.dataset = args.dataset
