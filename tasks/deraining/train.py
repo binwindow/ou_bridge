@@ -26,9 +26,8 @@ def parse_args():
     parser.add_argument("--lr", type=float, default=1e-4)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--num_val", type=int, default=15)
-    parser.add_argument("--dataset", type=str, default="rain100h")
-    parser.add_argument("--dataroot_GT", type=str, default="")
-    parser.add_argument("--dataroot_LQ", type=str, default="")
+    parser.add_argument("--dataset", type=str, default="default")
+    parser.add_argument("--data_root", type=str, default="")
     parser.add_argument("--resume", action="store_true", help="Resume from last checkpoint")
     return parser.parse_args()
 
@@ -47,8 +46,7 @@ def main():
     config.train.seed = args.seed
     config.train.num_val = args.num_val
     config.data.dataset = args.dataset
-    config.data.dataroot_GT = args.dataroot_GT
-    config.data.dataroot_LQ = args.dataroot_LQ
+    config.data.data_root = args.data_root
 
     trainer = Trainer(config)
 

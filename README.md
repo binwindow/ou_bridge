@@ -13,10 +13,18 @@ conda activate goub
 pip install -r requirements.txt
 ```
 
+## 数据集
+
+JSON 清单格式 `[{input: "rel/path/lq.png", target: "rel/path/gt.png"}]`，目录下需有 `train.json` 和 `test.json`（或 `val.json`）。
+
+```bash
+# 软链接数据集
+ln -s /path/to/dataset source/<name>
+```
+
 ## 启动实验
 
 ```bash
-# 修改脚本中数据集路径后运行
 bash scripts/run_cosine.sh
 bash scripts/run_linear.sh
 bash scripts/run_constant.sh
@@ -26,8 +34,7 @@ python tasks/deraining/train.py \
   --exp_name derain_cosine \
   --schedule cosine \
   --total_iterations 200000 \
-  --dataroot_GT /path/to/Rain100H/gt \
-  --dataroot_LQ /path/to/Rain100H/lq
+  --data_root source/DeRain-H
 ```
 
 ## 输出结构

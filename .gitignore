@@ -16,6 +16,9 @@ venv/
 *.swp
 *.swo
 
+# Local data
+source/
+
 # Output (training artifacts)
 outputs/
 

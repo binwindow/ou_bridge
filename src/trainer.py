@@ -110,15 +110,13 @@ class Trainer:
 
     def _create_dataloaders(self):
         cfg = self.config
+        root = cfg.data.data_root
+
         data_kwargs = dict(
-            data_type=cfg.data.data_type,
-            dataroot_GT=cfg.data.dataroot_GT,
-            dataroot_LQ=cfg.data.dataroot_LQ,
+            root_dir=root,
             patch_size=cfg.train.patch_size,
-            scale=1,
             use_flip=cfg.data.use_flip,
             use_rot=cfg.data.use_rot,
-            color=cfg.data.color,
         )
 
         train_sampler = None
@@ -126,11 +124,13 @@ class Trainer:
         if self.use_ddp:
             train_shuffle = False
 
+        train_json = os.path.join(root, "train.json")
         self.train_loader = create_dataloader(
             cfg.data.dataset,
             batch_size=cfg.train.batch_size,
             num_workers=cfg.data.num_workers,
             phase="train",
+            json_path=train_json,
             **data_kwargs,
         )
 
@@ -143,11 +143,15 @@ class Trainer:
                 pin_memory=True,
             )
 
+        val_json = os.path.join(root, "val.json")
+        if not os.path.exists(val_json):
+            val_json = os.path.join(root, "test.json")
         self.val_loader = create_dataloader(
             cfg.data.dataset,
             batch_size=1,
             num_workers=1,
             phase="val",
+            json_path=val_json,
             **data_kwargs,
         )
 

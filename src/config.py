@@ -43,14 +43,11 @@ class TrainConfig:
 
 @dataclass
 class DataConfig:
-    dataset: str = "rain100h"
-    data_type: str = "img"  # "img" | "lmdb"
-    dataroot_GT: str = ""
-    dataroot_LQ: str = ""
+    dataset: str = "default"
+    data_root: str = ""
     num_workers: int = 4
     use_flip: bool = True
     use_rot: bool = True
-    color: str = "RGB"
 
 
 @dataclass
