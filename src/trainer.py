@@ -7,7 +7,7 @@ import torch
 import torch.nn as nn
 from torch.nn.parallel import DistributedDataParallel as DDP
 from torch.utils.data.distributed import DistributedSampler
-from torch.cuda.amp import GradScaler, autocast
+from torch.amp import GradScaler, autocast
 from torchvision.utils import save_image
 from tqdm import tqdm
 
@@ -97,7 +97,7 @@ class Trainer:
 
         # AMP
         self.use_amp = config.train.use_amp and self.device.type == "cuda"
-        self.scaler = GradScaler("cuda") if self.use_amp else None
+        self.scaler = GradScaler("cuda") if self.use_amp and self.device.type == "cuda" else None
 
         # DDP wrap
         if self.use_ddp:
