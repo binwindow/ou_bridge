@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+
+# Virtual env
+venv/
+.env
+*.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Output (training artifacts)
+outputs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter checkpoint
+.ipynb_checkpoints/
+
+# PyTorch
+*.pt
+!*.ckpt
+
+# Project meta (Claude Code, local config, spec)
+CLAUDE.md
+pyproject.toml
+spec.md
