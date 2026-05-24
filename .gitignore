@@ -20,7 +20,7 @@ venv/
 source/
 
 # Output (training artifacts)
-outputs/
+# outputs/
 
 # OS
 .DS_Store
@@ -31,7 +31,7 @@ Thumbs.db
 
 # PyTorch
 *.pt
-!*.ckpt
+*.ckpt
 
 # Project meta (Claude Code, local config, spec)
 CLAUDE.md
