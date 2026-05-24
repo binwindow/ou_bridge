@@ -100,6 +100,12 @@ def main():
         with torch.no_grad():
             output = sde.reverse_sde(LQ.to(device), LQ.to(device), model.ema.ema_model, T=-1, save_states=False)
 
+        # Debug: print tensor stats for first image
+        if idx == 0:
+            print(f"  LQ    range: [{LQ.min():.4f}, {LQ.max():.4f}] mean={LQ.mean():.4f}")
+            print(f"  GT    range: [{GT.min():.4f}, {GT.max():.4f}] mean={GT.mean():.4f}")
+            print(f"  output range: [{output.min():.4f}, {output.max():.4f}] mean={output.mean():.4f}")
+
         # Clamp and save
         # Use the output directly (it's already the reverse SDE result)
         out_np = tensor2img(output[0])
