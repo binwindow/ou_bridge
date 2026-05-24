@@ -86,12 +86,15 @@ class DenoisingModel:
 
         return loss
 
-    def test(self, sde):
+    def test(self, sde, use_ema=False):
         """Run reverse SDE for validation. Returns output tensor."""
-        self.model.eval()
+        model = self.model
+        if use_ema:
+            model = self.ema.ema_model
+        model.eval()
         with torch.no_grad():
-            output = sde.reverse_sde(self.state, self.condition, self.model, save_states=False)
-        self.model.train()
+            output = sde.reverse_sde(self.state, self.condition, model, save_states=False)
+        model.train()
         self.output = output
         return output
 

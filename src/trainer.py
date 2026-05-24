@@ -261,13 +261,12 @@ class Trainer:
             GT = batch["GT"]
 
             self.model.feed_data(LQ, LQ, GT)
-            output = self.model.test(self.sde)
+            output = self.model.test(self.sde, use_ema=True)
 
             metrics = compute_batch_metrics(output, GT, self.device)
             for k in all_metrics:
                 all_metrics[k].append(metrics[k])
 
-            # Save first few samples for visual inspection
             if val_idx < 4:
                 sample_images.append({
                     "lq": LQ[0],
@@ -281,7 +280,6 @@ class Trainer:
         avg_metrics["iter"] = self.current_iteration
         avg_metrics["lr"] = self.scheduler.get_last_lr()[0]
 
-        # Log
         if self.logger:
             self.logger.log_val(avg_metrics)
             self.logger.info(
@@ -295,13 +293,16 @@ class Trainer:
             if avg_metrics["psnr"] > self.best_psnr:
                 self.best_psnr = avg_metrics["psnr"]
 
-            # Save sample images
+            # Save grid image: LQ | GT | Output, clamped to [0,1]
             sample_dir = os.path.join(self.config.samples_dir, f"iter_{self.current_iteration:06d}")
             os.makedirs(sample_dir, exist_ok=True)
             for i, imgs in enumerate(sample_images):
-                save_image(imgs["lq"], os.path.join(sample_dir, f"sample_{i}_lq.png"), normalize=True)
-                save_image(imgs["gt"], os.path.join(sample_dir, f"sample_{i}_gt.png"), normalize=True)
-                save_image(imgs["output"], os.path.join(sample_dir, f"sample_{i}_output.png"), normalize=True)
+                grid = torch.cat([
+                    torch.clamp(imgs["lq"], 0, 1),
+                    torch.clamp(imgs["gt"], 0, 1),
+                    torch.clamp(imgs["output"], 0, 1),
+                ], dim=2)  # stack horizontally
+                save_image(grid, os.path.join(sample_dir, f"sample_{i}_lq_gt_output.png"), normalize=False)
 
         return avg_metrics
 

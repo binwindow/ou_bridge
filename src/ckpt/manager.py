@@ -51,9 +51,13 @@ class CheckpointManager:
                 "ssim": metrics.get("ssim", None),
                 "lpips": metrics.get("lpips", None),
                 "iteration": iteration,
-                "ckpt_name": f"topk_psnr_{psnr:.3f}.ckpt",
             })
             self._topk_info.sort(key=lambda x: x["psnr"], reverse=True)
+
+            # Assign ranks and ckpt names
+            for rank, entry in enumerate(self._topk_info, 1):
+                entry["rank"] = rank
+                entry["ckpt_name"] = f"topk_{rank}_iter_{entry['iteration']:06d}_psnr_{entry['psnr']:.3f}.ckpt"
 
             # Keep top-k, remove old files
             while len(self._topk_info) > self.topk:
