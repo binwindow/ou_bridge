@@ -269,9 +269,9 @@ class Trainer:
 
             if val_idx < 4:
                 sample_images.append({
-                    "lq": LQ[0],
-                    "gt": GT[0],
-                    "output": output[0],
+                    "lq": LQ[0].cpu(),
+                    "gt": GT[0].cpu(),
+                    "output": output[0].cpu(),
                 })
 
         self.model.model.train()
