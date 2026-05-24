@@ -48,7 +48,6 @@ def modcrop(img_in, scale):
 
 
 def img2tensor(img):
-    """HWC BGR [0,255] uint8 -> CHW RGB [0,1] float"""
-    img = img.astype(np.float32) / 255.0
+    """HWC BGR [0,1] float32 -> CHW RGB [0,1] float tensor"""
     img = img[:, :, [2, 1, 0]]
     return torch.from_numpy(np.ascontiguousarray(np.transpose(img, (2, 0, 1)))).float()
