@@ -36,19 +36,25 @@ def parse_args():
 def main():
     args = parse_args()
 
-    config = ExperimentConfig(
-        exp_name=args.exp_name,
-    )
-    config.sde.schedule = args.schedule
-    config.train.total_iterations = args.total_iterations
-    config.train.batch_size = args.batch_size
-    config.train.patch_size = args.patch_size
-    config.train.lr = args.lr
-    config.train.gpu = args.gpu
-    config.train.seed = args.seed
-    config.train.num_val = args.num_val
-    config.data.dataset = args.dataset
-    config.data.data_root = args.data_root
+    if args.resume:
+        # Resume: load config from saved config.json, only override runtime params
+        config_path = os.path.join("outputs", args.exp_name, "log", "config.json")
+        config = ExperimentConfig.from_json(config_path)
+        config.exp_name = args.exp_name
+        config.train.gpu = args.gpu
+        config.data.data_root = args.data_root or config.data.data_root
+    else:
+        config = ExperimentConfig(exp_name=args.exp_name)
+        config.sde.schedule = args.schedule
+        config.train.total_iterations = args.total_iterations
+        config.train.batch_size = args.batch_size
+        config.train.patch_size = args.patch_size
+        config.train.lr = args.lr
+        config.train.gpu = args.gpu
+        config.train.seed = args.seed
+        config.train.num_val = args.num_val
+        config.data.dataset = args.dataset
+        config.data.data_root = args.data_root
 
     trainer = Trainer(config)
 
