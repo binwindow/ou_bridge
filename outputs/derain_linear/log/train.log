@@ -19,3 +19,14 @@
 2026-05-25 13:31:08 | [Val] iter=133333 | PSNR: 22.042 | SSIM: 0.673 | LPIPS: 0.1559 | Best PSNR: 22.519
 2026-05-25 13:31:24 | Checkpoint saved: ['last.ckpt']
 2026-05-25 13:51:43 | [Val] iter=146666 | PSNR: 22.340 | SSIM: 0.692 | LPIPS: 0.1515 | Best PSNR: 22.519
+2026-05-26 20:59:07 | Resumed from iteration 133333, best PSNR: 22.519
+2026-05-26 21:20:19 | [Val] iter=146666 | PSNR: 22.811 | SSIM: 0.706 | LPIPS: 0.1367 | Best PSNR: 22.519
+2026-05-26 21:21:19 | Checkpoint saved: ['topk_1_iter_146666_psnr_22.811.ckpt', 'topk_2_iter_093333_psnr_22.519.ckpt', 'topk_3_iter_080000_psnr_22.360.ckpt', 'last.ckpt']
+2026-05-26 21:41:27 | [Val] iter=160000 | PSNR: 22.338 | SSIM: 0.691 | LPIPS: 0.1633 | Best PSNR: 22.811
+2026-05-26 21:41:46 | Checkpoint saved: ['last.ckpt']
+2026-05-26 22:02:51 | [Val] iter=173333 | PSNR: 22.187 | SSIM: 0.691 | LPIPS: 0.1387 | Best PSNR: 22.811
+2026-05-26 22:03:10 | Checkpoint saved: ['last.ckpt']
+2026-05-26 22:24:16 | [Val] iter=186666 | PSNR: 22.170 | SSIM: 0.688 | LPIPS: 0.1529 | Best PSNR: 22.811
+2026-05-26 22:24:38 | Checkpoint saved: ['last.ckpt']
+2026-05-26 22:45:52 | [Val] iter=200000 | PSNR: 22.597 | SSIM: 0.698 | LPIPS: 0.1408 | Best PSNR: 22.811
+2026-05-26 22:46:30 | Checkpoint saved: ['topk_2_iter_200000_psnr_22.597.ckpt', 'topk_3_iter_093333_psnr_22.519.ckpt', 'last.ckpt']
