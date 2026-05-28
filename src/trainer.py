@@ -165,7 +165,7 @@ class Trainer:
         pbar = tqdm(
             total=cfg.train.total_iterations,
             initial=self.current_iteration,
-            desc=f"[{cfg.exp_name}]",
+            desc="[train]",
             disable=not self.is_main,
             ncols=100,
             dynamic_ncols=False,
@@ -248,7 +248,7 @@ class Trainer:
         all_metrics = {"psnr": [], "ssim": [], "lpips": []}
         sample_images = []
 
-        val_pbar = tqdm(self.val_loader, desc="  val", ncols=100, dynamic_ncols=False, leave=False)
+        val_pbar = tqdm(self.val_loader, desc="[val]", ncols=100, dynamic_ncols=False, leave=False)
 
         for val_idx, batch in enumerate(val_pbar):
             LQ = batch["LQ"]
@@ -288,11 +288,14 @@ class Trainer:
 
         sc = cfg.sde
         if sc.sde_type == "goub":
-            sde_desc = f"GOUB | schedule={sc.schedule} | λ²={sc.lambda_square} | T={sc.T} | ε={sc.eps}"
+            nfe = sc.T
+            sde_desc = f"GOUB | schedule={sc.schedule} | λ²={sc.lambda_square} | NFE={nfe} | ε={sc.eps}"
         elif sc.sde_type == "ve":
-            sde_desc = f"VE-bridge | σ∈[{sc.sigma_min},{sc.sigma_max}] | σ_data={sc.sigma_data}"
+            nfe = 2 * sc.num_steps_sampling
+            sde_desc = f"VE-bridge | σ∈[{sc.sigma_min},{sc.sigma_max}] | σ_data={sc.sigma_data} | NFE={nfe}"
         elif sc.sde_type == "vp":
-            sde_desc = f"VP-bridge | β_d={sc.beta_d} | β_min={sc.beta_min}"
+            nfe = 2 * sc.num_steps_sampling
+            sde_desc = f"VP-bridge | β_d={sc.beta_d} | β_min={sc.beta_min} | NFE={nfe}"
 
         lines = [
             f"── {cfg.exp_name} " + "─" * (60 - len(cfg.exp_name)),
