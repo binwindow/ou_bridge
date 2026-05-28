@@ -19,7 +19,7 @@ def create_dataset(name, **kwargs) -> PairedImageDataset:
 
 
 def create_dataloader(name, batch_size, num_workers, phase, **kwargs):
-    dataset = create_dataset(name, **kwargs)
+    dataset = create_dataset(name, root_dir=kwargs.get("root_dir", ""), phase=phase, **kwargs)
     shuffle = phase == "train"
     return DataLoader(dataset, batch_size=batch_size, shuffle=shuffle,
                       num_workers=num_workers, pin_memory=True)

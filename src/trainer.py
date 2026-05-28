@@ -6,7 +6,6 @@ import numpy as np
 import torch
 import torch.nn as nn
 from torch.nn.parallel import DistributedDataParallel as DDP
-from torch.utils.data.distributed import DistributedSampler
 from torch.amp import GradScaler, autocast
 from torchvision.utils import save_image
 from tqdm import tqdm
@@ -120,48 +119,29 @@ class Trainer:
 
     def _create_dataloaders(self):
         cfg = self.config
-        root = cfg.data.data_root
 
         data_kwargs = dict(
-            root_dir=root,
+            root_dir=cfg.data.data_root,
             patch_size=cfg.train.patch_size,
             use_flip=cfg.data.use_flip,
             use_rot=cfg.data.use_rot,
         )
 
-        train_sampler = None
-        train_shuffle = True
-        if self.use_ddp:
-            train_shuffle = False
+        # TODO: DDP — wrap with DistributedSampler when use_ddp=True
 
-        train_json = os.path.join(root, "train.json")
         self.train_loader = create_dataloader(
             cfg.data.dataset,
             batch_size=cfg.train.batch_size,
             num_workers=cfg.data.num_workers,
             phase="train",
-            json_path=train_json,
             **data_kwargs,
         )
 
-        if self.use_ddp and train_sampler is not None:
-            self.train_loader = torch.utils.data.DataLoader(
-                self.train_loader.dataset,
-                batch_size=cfg.train.batch_size,
-                sampler=DistributedSampler(self.train_loader.dataset),
-                num_workers=cfg.data.num_workers,
-                pin_memory=True,
-            )
-
-        val_json = os.path.join(root, "val.json")
-        if not os.path.exists(val_json):
-            val_json = os.path.join(root, "test.json")
         self.val_loader = create_dataloader(
             cfg.data.dataset,
             batch_size=1,
             num_workers=1,
             phase="val",
-            json_path=val_json,
             **data_kwargs,
         )
 
@@ -197,7 +177,7 @@ class Trainer:
 
             # Forward diffusion
             timesteps, states = self.sde.generate_random_states(GT, LQ)
-            self.model.feed_data(states, LQ, GT)
+            self.model.feed_data(xt=states, LQ=LQ, GT=GT)
 
             # Optimize
             self.optimizer.zero_grad()
@@ -262,8 +242,8 @@ class Trainer:
             LQ = batch["LQ"]
             GT = batch["GT"]
 
-            self.model.feed_data(LQ, LQ, GT)
-            output = self.model.test(self.sde, use_ema=True)
+            self.model.feed_data(xt=LQ, LQ=LQ, GT=GT)
+            output = self.model.infer(self.sde, use_ema=True)
 
             metrics = compute_batch_metrics(output, GT, self.device)
             for k in all_metrics:

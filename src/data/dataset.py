@@ -19,7 +19,7 @@ class PairedImageDataset(data.Dataset):
     Paths are resolved relative to `root_dir`.
     """
 
-    def __init__(self, json_path, root_dir, patch_size=64, phase="train",
+    def __init__(self, root_dir, phase="train", patch_size=64,
                  use_flip=True, use_rot=True):
         super().__init__()
         self.root_dir = root_dir
@@ -28,8 +28,16 @@ class PairedImageDataset(data.Dataset):
         self.use_flip = use_flip
         self.use_rot = use_rot
 
+        json_path = self._resolve_json_path(root_dir, phase)
         with open(json_path, "r") as f:
             self.pairs = json.load(f)
+
+    @staticmethod
+    def _resolve_json_path(root_dir, phase):
+        """Map (root_dir, phase) to a JSON manifest path. Override in subclasses."""
+        if phase == "val" and not os.path.exists(os.path.join(root_dir, "val.json")):
+            return os.path.join(root_dir, "test.json")
+        return os.path.join(root_dir, f"{phase}.json")
 
     def __len__(self):
         return len(self.pairs)

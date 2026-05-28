@@ -9,7 +9,6 @@ import os
 class SDE(abc.ABC):
     def __init__(self, T, device=None):
         self.T = T
-        self.dt = 1 / T
         self.device = device
 
     @abc.abstractmethod
@@ -51,12 +50,10 @@ class GOUB(SDE):
     def _initialize(self, lambda_square, T, schedule, eps=0.01):
 
         def constant_theta_schedule(timesteps, v=1.):
-            print('constant schedule')
             timesteps = timesteps + 1
             return torch.ones(timesteps, dtype=torch.float32)
 
         def linear_theta_schedule(timesteps):
-            print('linear schedule')
             timesteps = timesteps + 1
             scale = 1000 / timesteps
             beta_start = scale * 0.0001
@@ -64,7 +61,6 @@ class GOUB(SDE):
             return torch.linspace(beta_start, beta_end, timesteps, dtype=torch.float32)
 
         def cosine_theta_schedule(timesteps, s=0.008):
-            print('cosine schedule')
             timesteps = timesteps + 2
             steps = timesteps + 1
             x = torch.linspace(0, timesteps, steps, dtype=torch.float32)

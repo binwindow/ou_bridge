@@ -60,40 +60,40 @@ class DenoisingModel:
         self.loss_fn = MatchingLoss(loss_type=config.train.loss_type, is_weighted=False).to(device)
 
         # State buffers
-        self.state = None
+        self.xt = None       # current state x_t
+        self.x0 = None       # ground truth x_0
         self.condition = None
-        self.state_0 = None
         self.output = None
 
-    def feed_data(self, state, LQ, GT=None):
-        self.state = state.to(self.device)
+    def feed_data(self, xt, LQ, GT=None):
+        self.xt = xt.to(self.device)
         self.condition = LQ.to(self.device)
         if GT is not None:
-            self.state_0 = GT.to(self.device)
+            self.x0 = GT.to(self.device)
 
     def optimize_parameters(self, step: int, timesteps, sde):
         """Single training step. sde is the GOUB instance (pure functional)."""
         timesteps = timesteps.to(self.device)
 
         # Predict noise using the model (model signature: model(xt, cond, t))
-        noise = self.model(self.state, self.condition, timesteps.squeeze())
+        noise = self.model(self.xt, self.condition, timesteps.squeeze())
         score = sde.get_score_from_noise(noise, timesteps)
 
         # Maximum likelihood: match predicted reverse step to optimum reverse step
-        xt_1_expectation = sde.reverse_sde_step_mean(self.state, self.condition, score, timesteps)
-        xt_1_optimum = sde.reverse_optimum_step(self.state, self.state_0, self.condition, timesteps)
+        xt_1_expectation = sde.reverse_sde_step_mean(self.xt, self.condition, score, timesteps)
+        xt_1_optimum = sde.reverse_optimum_step(self.xt, self.x0, self.condition, timesteps)
         loss = self.loss_fn(xt_1_expectation, xt_1_optimum)
 
         return loss
 
-    def test(self, sde, use_ema=False):
-        """Run reverse SDE for validation. Returns output tensor."""
+    def infer(self, sde, use_ema=False):
+        """Run reverse SDE to generate derained image. Returns output tensor."""
         model = self.model
         if use_ema:
             model = self.ema.ema_model
         model.eval()
         with torch.no_grad():
-            output = sde.reverse_sde(self.state, self.condition, model, save_states=False)
+            output = sde.reverse_sde(self.xt, self.condition, model, save_states=False)
         model.train()
         self.output = output
         return output
