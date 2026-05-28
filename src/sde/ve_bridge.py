@@ -66,11 +66,12 @@ class VEBridge(BaseSDE):
         return sigma, x_t
 
     def compute_loss(self, model, xt, x0, mu, sigma, loss_fn):
-        """Predict x0 from xt, weight by SNR. No preconditioning."""
+        """Predict x0 from xt. Karras weighting for stability."""
         pred_x0 = model(xt, mu, sigma.squeeze())
-        # SNR weighting
         snr = sigma ** -2
-        weights = _append_dims(snr, xt.ndim)
+        # Karras weighting: snr + 1/sigma_data^2, prevents blowup at small sigma
+        weights = snr + 1.0 / self.sigma_data ** 2
+        weights = _append_dims(weights, xt.ndim)
         loss = loss_fn(weights * pred_x0, weights * x0)
         return loss
 
