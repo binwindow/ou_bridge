@@ -23,17 +23,31 @@ JSON 清单格式 `[{input: "rel/path/lq.png", target: "rel/path/gt.png"}]`，�
 ln -s /path/to/dataset source/<name>
 ```
 
-## 启动实验
+## 实验
+
+| 实验 | 路径 | 说明 |
+|------|------|------|
+| Theta 调度对比 | `tasks/deraining/theta_exploration/` | GOUB 三种 schedule (cosine/linear/constant) |
+| SDE 桥模型对比 | `tasks/deraining/sde_comparison/` | GOUB / VE-bridge / VP-bridge |
+
+每个实验目录含 `README.md` 和 `scripts/`，进入后阅读即可启动。
 
 ```bash
-bash scripts/run_cosine.sh
-bash scripts/run_linear.sh
-bash scripts/run_constant.sh
+# Theta 对比
+bash tasks/deraining/theta_exploration/scripts/run_cosine.sh
 
-# 或直接调用
+# SDE 对比
+bash tasks/deraining/sde_comparison/scripts/run_goub.sh
+```
+
+或直接调用共用入口：
+
+```bash
 python tasks/deraining/train.py \
-  --exp_name derain_cosine \
+  --exp_name my_exp \
+  --sde_type goub \
   --schedule cosine \
+  --gpu 0 \
   --total_iterations 200000 \
   --data_root source/DeRain-H
 ```
@@ -60,7 +74,7 @@ outputs/<exp_name>/
 ## 恢复训练
 
 ```bash
-python tasks/deraining/train.py --exp_name derain_cosine --resume
+python tasks/deraining/train.py --exp_name my_exp --resume --gpu 2
 ```
 
 ## 可视化

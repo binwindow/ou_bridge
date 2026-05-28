@@ -7,7 +7,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import torch
 from src.config import ExperimentConfig
-from src.sde import GOUB
+from src.sde import create_sde
 from src.model import DenoisingModel
 from src.trainer import set_seed
 
@@ -22,19 +22,18 @@ config.network.depth = 2
 
 # 1. SDE
 print("\n--- SDE ---")
-sde = GOUB(lambda_square=30, T=100, schedule='cosine', eps=0.005, device=device)
+sde = create_sde("goub", lambda_square=30, T=100, schedule='cosine', eps=0.005, device=device)
 x0 = torch.randn(1, 3, 64, 64).to(device)
 mu = torch.randn(1, 3, 64, 64).to(device)
 timesteps, states = sde.generate_random_states(x0, mu)
 print(f"  states shape: {states.shape}")
-print(f"  thetas range: [{sde.thetas.min():.4f}, {sde.thetas.max():.4f}]")
 
 # 2. Model forward
 print("\n--- Model ---")
 model = DenoisingModel(config, device)
 print(f"  total params: {model.get_parameter_info()['total_params']:,}")
 
-model.feed_data(states, mu, x0)
+model.feed_data(xt=states, LQ=mu, GT=x0)
 noise = model.model(states, mu, timesteps.squeeze())
 print(f"  noise shape: {noise.shape}")
 
@@ -43,17 +42,17 @@ print("\n--- Optimize ---")
 optimizer = torch.optim.AdamW(model.model.parameters(), lr=1e-4)
 scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=100)
 optimizer.zero_grad()
-loss = model.optimize_parameters(0, timesteps, sde)
+loss = model.optimize_parameters(timesteps, sde)
 loss.backward()
 optimizer.step()
 model.ema.update(model.model)
 print(f"  loss: {loss.item():.6f}")
 
-# 4. Inference (2-step reverse for speed)
+# 4. Inference
 print("\n--- Inference ---")
 model.model.eval()
 with torch.no_grad():
-    output = sde.reverse_sde(states[:1], mu[:1], model.model, T=2)
+    output = sde.sample(model.model, states[:1], mu[:1])
 print(f"  output shape: {output.shape}")
 
 # 5. Checkpoint save/load

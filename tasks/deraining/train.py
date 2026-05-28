@@ -19,6 +19,7 @@ from src.trainer import Trainer
 def parse_args():
     parser = argparse.ArgumentParser(description="GOUB Deraining Training")
     parser.add_argument("--exp_name", type=str, default="derain_cosine", help="Experiment name")
+    parser.add_argument("--sde_type", type=str, default="goub", choices=["goub", "ve", "vp"])
     parser.add_argument("--schedule", type=str, default="cosine", choices=["cosine", "linear", "constant"])
     parser.add_argument("--total_iterations", type=int, default=200000)
     parser.add_argument("--batch_size", type=int, default=8)
@@ -45,6 +46,7 @@ def main():
         config.data.data_root = args.data_root or config.data.data_root
     else:
         config = ExperimentConfig(exp_name=args.exp_name)
+        config.sde.sde_type = args.sde_type
         config.sde.schedule = args.schedule
         config.train.total_iterations = args.total_iterations
         config.train.batch_size = args.batch_size

@@ -5,10 +5,21 @@ import json
 
 @dataclass
 class SDEConfig:
+    sde_type: str = "goub"      # "goub" | "ve" | "vp"
+    # GOUB params
     lambda_square: float = 30.0
     T: int = 100
-    schedule: str = "cosine"  # "cosine" | "linear" | "constant"
+    schedule: str = "cosine"    # "cosine" | "linear" | "constant"
     eps: float = 0.005
+    # VE / VP shared params
+    sigma_max: float = 80.0
+    sigma_min: float = 0.002
+    sigma_data: float = 0.5
+    rho: float = 7.0
+    num_steps_sampling: int = 100
+    # VP-specific params
+    beta_d: float = 2.0
+    beta_min: float = 0.1
 
 
 @dataclass

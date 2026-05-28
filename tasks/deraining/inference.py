@@ -16,7 +16,7 @@ from tqdm import tqdm
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 from src.config import ExperimentConfig
-from src.sde import GOUB
+from src.sde import create_sde
 from src.model import DenoisingModel
 from src.data import create_dataloader
 from src.logging.metrics import tensor2img, compute_batch_metrics
@@ -46,13 +46,17 @@ def main():
 
     # Build model
     model = DenoisingModel(config, device)
-    sde = GOUB(
-        lambda_square=config.sde.lambda_square,
-        T=config.sde.T,
-        schedule=config.sde.schedule,
-        eps=config.sde.eps,
-        device=device,
-    )
+    sc = config.sde
+    sde_kwargs = dict(device=device)
+    if sc.sde_type == "goub":
+        sde_kwargs.update(lambda_square=sc.lambda_square, T=sc.T, schedule=sc.schedule, eps=sc.eps)
+    elif sc.sde_type == "ve":
+        sde_kwargs.update(sigma_max=sc.sigma_max, sigma_min=sc.sigma_min, sigma_data=sc.sigma_data,
+                          num_steps=sc.num_steps_sampling, rho=sc.rho)
+    elif sc.sde_type == "vp":
+        sde_kwargs.update(sigma_max=sc.sigma_max, sigma_min=sc.sigma_min, sigma_data=sc.sigma_data,
+                          beta_d=sc.beta_d, beta_min=sc.beta_min, num_steps=sc.num_steps_sampling)
+    sde = create_sde(sc.sde_type, **sde_kwargs)
 
     # Load checkpoint
     ckpt_dir = os.path.join(exp_dir, "ckpt")
@@ -92,13 +96,13 @@ def main():
 
     all_metrics = {"psnr": [], "ssim": [], "lpips": []}
 
-    for idx, batch in enumerate(tqdm(loader, desc="Inference")):
+    for idx, batch in enumerate(tqdm(loader, desc="Inference", ncols=80, dynamic_ncols=False)):
         LQ = batch["LQ"]
         GT = batch["GT"]
         lq_path = batch["LQ_path"][0]
 
         with torch.no_grad():
-            output = sde.reverse_sde(LQ.to(device), LQ.to(device), model.ema.ema_model, T=-1, save_states=False)
+            output = sde.sample(model.ema.ema_model, LQ.to(device), LQ.to(device))
 
         # Debug: print tensor stats for first image
         if idx == 0:

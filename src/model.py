@@ -71,29 +71,18 @@ class DenoisingModel:
         if GT is not None:
             self.x0 = GT.to(self.device)
 
-    def optimize_parameters(self, step: int, timesteps, sde):
-        """Single training step. sde is the GOUB instance (pure functional)."""
-        timesteps = timesteps.to(self.device)
-
-        # Predict noise using the model (model signature: model(xt, cond, t))
-        noise = self.model(self.xt, self.condition, timesteps.squeeze())
-        score = sde.get_score_from_noise(noise, timesteps)
-
-        # Maximum likelihood: match predicted reverse step to optimum reverse step
-        xt_1_expectation = sde.reverse_sde_step_mean(self.xt, self.condition, score, timesteps)
-        xt_1_optimum = sde.reverse_optimum_step(self.xt, self.x0, self.condition, timesteps)
-        loss = self.loss_fn(xt_1_expectation, xt_1_optimum)
-
-        return loss
+    def optimize_parameters(self, timesteps, sde):
+        """Single training step. Delegates to SDE-specific compute_loss."""
+        return sde.compute_loss(self.model, self.xt, self.x0, self.condition, timesteps, self.loss_fn)
 
     def infer(self, sde, use_ema=False):
-        """Run reverse SDE to generate derained image. Returns output tensor."""
+        """Run reverse process to generate derained image. Returns output tensor."""
         model = self.model
         if use_ema:
             model = self.ema.ema_model
         model.eval()
         with torch.no_grad():
-            output = sde.reverse_sde(self.xt, self.condition, model, save_states=False)
+            output = sde.sample(model, self.xt, self.condition)
         model.train()
         self.output = output
         return output

@@ -11,7 +11,7 @@ from torchvision.utils import save_image
 from tqdm import tqdm
 
 from .config import ExperimentConfig
-from .sde import GOUB
+from .sde import create_sde
 from .model import DenoisingModel
 from .data import create_dataloader
 from .logging import Logger, compute_batch_metrics
@@ -68,13 +68,20 @@ class Trainer:
         self.model = DenoisingModel(config, self.device)
 
         # SDE
-        self.sde = GOUB(
-            lambda_square=config.sde.lambda_square,
-            T=config.sde.T,
-            schedule=config.sde.schedule,
-            eps=config.sde.eps,
-            device=self.device,
-        )
+        sde_cfg = config.sde
+        sde_kwargs = dict(device=self.device)
+        if sde_cfg.sde_type == "goub":
+            sde_kwargs.update(lambda_square=sde_cfg.lambda_square, T=sde_cfg.T,
+                              schedule=sde_cfg.schedule, eps=sde_cfg.eps)
+        elif sde_cfg.sde_type == "ve":
+            sde_kwargs.update(sigma_max=sde_cfg.sigma_max, sigma_min=sde_cfg.sigma_min,
+                              sigma_data=sde_cfg.sigma_data, num_steps=sde_cfg.num_steps_sampling,
+                              rho=sde_cfg.rho)
+        elif sde_cfg.sde_type == "vp":
+            sde_kwargs.update(sigma_max=sde_cfg.sigma_max, sigma_min=sde_cfg.sigma_min,
+                              sigma_data=sde_cfg.sigma_data, beta_d=sde_cfg.beta_d,
+                              beta_min=sde_cfg.beta_min, num_steps=sde_cfg.num_steps_sampling)
+        self.sde = create_sde(sde_cfg.sde_type, **sde_kwargs)
 
         # Data
         self._create_dataloaders()
@@ -116,6 +123,7 @@ class Trainer:
         if self.is_main:
             self.logger.save_config(config.to_dict())
             self.logger.save_parameter_info(self.model.get_parameter_info())
+            self._print_config_summary()
 
     def _create_dataloaders(self):
         cfg = self.config
@@ -159,6 +167,8 @@ class Trainer:
             initial=self.current_iteration,
             desc=f"[{cfg.exp_name}]",
             disable=not self.is_main,
+            ncols=80,
+            dynamic_ncols=False,
         )
 
         data_iter = iter(self.train_loader)
@@ -184,12 +194,12 @@ class Trainer:
 
             if self.use_amp:
                 with autocast("cuda"):
-                    loss = self.model.optimize_parameters(self.current_iteration, timesteps, self.sde)
+                    loss = self.model.optimize_parameters(timesteps, self.sde)
                 self.scaler.scale(loss).backward()
                 self.scaler.step(self.optimizer)
                 self.scaler.update()
             else:
-                loss = self.model.optimize_parameters(self.current_iteration, timesteps, self.sde)
+                loss = self.model.optimize_parameters(timesteps, self.sde)
                 loss.backward()
                 self.optimizer.step()
 
@@ -238,7 +248,9 @@ class Trainer:
         all_metrics = {"psnr": [], "ssim": [], "lpips": []}
         sample_images = []
 
-        for val_idx, batch in enumerate(self.val_loader):
+        val_pbar = tqdm(self.val_loader, desc="  val", ncols=80, dynamic_ncols=False, leave=False)
+
+        for val_idx, batch in enumerate(val_pbar):
             LQ = batch["LQ"]
             GT = batch["GT"]
 
@@ -263,6 +275,38 @@ class Trainer:
         avg_metrics["lr"] = self.scheduler.get_last_lr()[0]
 
         return avg_metrics, sample_images
+
+    def _print_config_summary(self):
+        cfg = self.config
+        model_info = self.model.get_parameter_info()
+        total_params = model_info["total_params"]
+        train_size = len(self.train_loader.dataset)
+        val_size = len(self.val_loader.dataset)
+        amp_status = "AMP" if cfg.train.use_amp else "FP32"
+        gpu_str = os.environ.get("CUDA_VISIBLE_DEVICES", "0")
+        device_str = f"CUDA:{gpu_str} ({torch.cuda.get_device_name(0)})" if torch.cuda.is_available() else "CPU"
+
+        sc = cfg.sde
+        if sc.sde_type == "goub":
+            sde_desc = f"GOUB | schedule={sc.schedule} | λ²={sc.lambda_square} | T={sc.T} | ε={sc.eps}"
+        elif sc.sde_type == "ve":
+            sde_desc = f"VE-bridge | σ∈[{sc.sigma_min},{sc.sigma_max}] | σ_data={sc.sigma_data}"
+        elif sc.sde_type == "vp":
+            sde_desc = f"VP-bridge | t∈[{sc.sigma_min},{sc.sigma_max}] | β_d={sc.beta_d} | β_min={sc.beta_min}"
+
+        lines = [
+            f"── {cfg.exp_name} " + "─" * (60 - len(cfg.exp_name)),
+            f"  Model:    {cfg.network.architecture} | {total_params:,} params",
+            f"  Data:     {cfg.data.data_root} | train: {train_size} | val: {val_size}",
+            f"  Training: {cfg.train.total_iterations} iters | batch: {cfg.train.batch_size} | patch: {cfg.train.patch_size} | {amp_status}",
+            f"  Optim:    {cfg.train.optimizer} | lr: {cfg.train.lr} → {cfg.train.min_lr} (CosineAnnealingLR)",
+            f"  EMA:      β={cfg.train.ema_beta}, every {cfg.train.ema_update_every} step",
+            f"  SDE:      {sc.sde_type} | {sde_desc}",
+            f"  Device:   {device_str}",
+            f"  Output:   outputs/{cfg.exp_name}/",
+            "─" * 60,
+        ]
+        self.logger.info("\n" + "\n".join(lines))
 
     def _log_and_save_samples(self, avg_metrics: dict, sample_images: list):
         """Log val metrics and save sample grid images. Called AFTER checkpoint save."""
