@@ -55,8 +55,9 @@ class VEBridge(BaseSDE):
 
     def generate_random_states(self, x0, mu):
         """Sample sigma from log-uniform, generate bridge state. mu = x_T = LQ."""
+        x0, mu = x0.to(self.device), mu.to(self.device)
         b = x0.shape[0]
-        log_sigma = torch.rand(b, device=x0.device) * (
+        log_sigma = torch.rand(b, device=self.device) * (
             math.log(self.sigma_max) - math.log(self.sigma_min)
         ) + math.log(self.sigma_min)
         sigma = log_sigma.exp()

@@ -72,8 +72,9 @@ class VPBridge(BaseSDE):
 
     def generate_random_states(self, x0, mu):
         """Sample t from uniform, generate bridge state. mu = x_T = LQ."""
+        x0, mu = x0.to(self.device), mu.to(self.device)
         b = x0.shape[0]
-        t = torch.rand(b, device=x0.device) * (self.sigma_max - self.sigma_min) + self.sigma_min
+        t = torch.rand(b, device=self.device) * (self.sigma_max - self.sigma_min) + self.sigma_min
         t = _append_dims(t, x0.ndim)
         x_t = self._bridge_sample(x0, mu, t)
         return t, x_t
