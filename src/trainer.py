@@ -78,9 +78,9 @@ class Trainer:
                               sigma_data=sde_cfg.sigma_data, num_steps=sde_cfg.num_steps_sampling,
                               rho=sde_cfg.rho)
         elif sde_cfg.sde_type == "vp":
-            sde_kwargs.update(sigma_max=sde_cfg.sigma_max, sigma_min=sde_cfg.sigma_min,
-                              sigma_data=sde_cfg.sigma_data, beta_d=sde_cfg.beta_d,
-                              beta_min=sde_cfg.beta_min, num_steps=sde_cfg.num_steps_sampling)
+            sde_kwargs.update(sigma_data=sde_cfg.sigma_data,
+                              beta_d=sde_cfg.beta_d, beta_min=sde_cfg.beta_min,
+                              num_steps=sde_cfg.num_steps_sampling)
         self.sde = create_sde(sde_cfg.sde_type, **sde_kwargs)
 
         # Data
@@ -292,7 +292,7 @@ class Trainer:
         elif sc.sde_type == "ve":
             sde_desc = f"VE-bridge | σ∈[{sc.sigma_min},{sc.sigma_max}] | σ_data={sc.sigma_data}"
         elif sc.sde_type == "vp":
-            sde_desc = f"VP-bridge | t∈[{sc.sigma_min},{sc.sigma_max}] | β_d={sc.beta_d} | β_min={sc.beta_min}"
+            sde_desc = f"VP-bridge | β_d={sc.beta_d} | β_min={sc.beta_min}"
 
         lines = [
             f"── {cfg.exp_name} " + "─" * (60 - len(cfg.exp_name)),
