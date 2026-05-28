@@ -167,7 +167,7 @@ class Trainer:
             initial=self.current_iteration,
             desc=f"[{cfg.exp_name}]",
             disable=not self.is_main,
-            ncols=120,
+            ncols=100,
             dynamic_ncols=False,
         )
 
@@ -248,7 +248,7 @@ class Trainer:
         all_metrics = {"psnr": [], "ssim": [], "lpips": []}
         sample_images = []
 
-        val_pbar = tqdm(self.val_loader, desc="  val", ncols=120, dynamic_ncols=False, leave=False)
+        val_pbar = tqdm(self.val_loader, desc="  val", ncols=100, dynamic_ncols=False, leave=False)
 
         for val_idx, batch in enumerate(val_pbar):
             LQ = batch["LQ"]
