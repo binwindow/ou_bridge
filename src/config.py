@@ -41,7 +41,7 @@ class TrainConfig:
     optimizer: str = "AdamW"
     weight_decay: float = 0.01
     beta1: float = 0.9
-    beta2: float = 0.99
+    beta2: float = 0.999
     ema_beta: float = 0.999
     ema_update_every: int = 1
     gpu: str = "0"

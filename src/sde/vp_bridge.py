@@ -35,6 +35,16 @@ class VPBridge(BaseSDE):
         self.num_steps = num_steps
         self.device = device
 
+        # Pre-compute terminal values as floats (deferred tensor creation on first use)
+        self._logsnr_T_val = _vp_logsnr(torch.tensor(sigma_max), beta_d, beta_min).item()
+        self._logs_T_val = _vp_logs(torch.tensor(sigma_max), beta_d, beta_min).item()
+
+    def _logsnr_T(self, device):
+        return torch.tensor(self._logsnr_T_val, device=device)
+
+    def _logs_T(self, device):
+        return torch.tensor(self._logs_T_val, device=device)
+
     # ---- helpers ----
 
     def _snr_sqrt_reciprocal(self, t):
@@ -48,11 +58,9 @@ class VPBridge(BaseSDE):
 
     def _coeffs(self, t):
         logsnr_t = _vp_logsnr(t, self.beta_d, self.beta_min)
-        logsnr_T = _vp_logsnr(torch.tensor(self.sigma_max, device=t.device),
-                              self.beta_d, self.beta_min)
         logs_t = _vp_logs(t, self.beta_d, self.beta_min)
-        logs_T = _vp_logs(torch.tensor(self.sigma_max, device=t.device),
-                          self.beta_d, self.beta_min)
+        logsnr_T = self._logsnr_T(t.device)
+        logs_T = self._logs_T(t.device)
         a_t = (logsnr_T - logsnr_t + logs_t - logs_T).exp()
         b_t = -torch.expm1(logsnr_T - logsnr_t) * logs_t.exp()
         std_t = (-torch.expm1(logsnr_T - logsnr_t)).sqrt() * (logs_t - logsnr_t / 2).exp()
@@ -83,10 +91,6 @@ class VPBridge(BaseSDE):
                                 device=xt.device)
         x = xt
 
-        logsnr_T = _vp_logsnr(sigmas[0], self.beta_d, self.beta_min)
-        logs_T = _vp_logs(sigmas[0], self.beta_d, self.beta_min)
-        nfe = 0
-
         for i in range(len(sigmas) - 1):
             t_i = sigmas[i]
             t_next = sigmas[i + 1]
@@ -111,11 +115,8 @@ class VPBridge(BaseSDE):
         """VP ODE derivative, matching DDBM's get_d_vp."""
         logsnr_t = _vp_logsnr(t, self.beta_d, self.beta_min)
         logs_t = _vp_logs(t, self.beta_d, self.beta_min)
-
-        logsnr_T = _vp_logsnr(torch.tensor(self.sigma_max, device=x.device),
-                              self.beta_d, self.beta_min)
-        logs_T = _vp_logs(torch.tensor(self.sigma_max, device=x.device),
-                          self.beta_d, self.beta_min)
+        logsnr_T = self._logsnr_T(x.device)
+        logs_T = self._logs_T(x.device)
 
         a_t = (logsnr_T - logsnr_t + logs_t - logs_T).exp()
         b_t = -torch.expm1(logsnr_T - logsnr_t) * logs_t.exp()
@@ -126,7 +127,6 @@ class VPBridge(BaseSDE):
         grad_logq = -(x - mu_t) / std_t ** 2 / (-torch.expm1(logsnr_T - logsnr_t))
         grad_logpxTlxt = -(x - torch.exp(logs_t - logs_T) * x_T) / std_t ** 2 / torch.expm1(logsnr_t - logsnr_T)
 
-        # Drift and diffusion from VP SDE
         sigma_t = self._snr_sqrt_reciprocal(t)
         sigma_t_deriv = self._snr_sqrt_reciprocal_deriv(t)
         s_t = (1 + sigma_t ** 2).rsqrt()
