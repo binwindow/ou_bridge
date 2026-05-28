@@ -96,7 +96,7 @@ def main():
 
     all_metrics = {"psnr": [], "ssim": [], "lpips": []}
 
-    for idx, batch in enumerate(tqdm(loader, desc="Inference", ncols=80, dynamic_ncols=False)):
+    for idx, batch in enumerate(tqdm(loader, desc="Inference", ncols=120, dynamic_ncols=False)):
         LQ = batch["LQ"]
         GT = batch["GT"]
         lq_path = batch["LQ_path"][0]
