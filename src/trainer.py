@@ -240,17 +240,19 @@ class Trainer:
             pbar.update(1)
             step_time_start = time.time()
 
-            # Validation
+            # Validation: save ckpt first, then log (avoid duplicate on crash)
             if self.is_main and self.current_iteration in self.val_iterations:
-                val_metrics = self._validate()
+                val_metrics, sample_images = self._validate()
                 self._save_checkpoint(val_metrics)
+                self._log_and_save_samples(val_metrics, sample_images)
 
         pbar.close()
 
         if self.is_main:
             self.logger.close()
 
-    def _validate(self) -> dict:
+    def _validate(self) -> tuple[dict, list]:
+        """Run inference on val set. Returns (metrics_dict, sample_images_list) without logging."""
         self.model.model.eval()
 
         all_metrics = {"psnr": [], "ssim": [], "lpips": []}
@@ -280,31 +282,34 @@ class Trainer:
         avg_metrics["iter"] = self.current_iteration
         avg_metrics["lr"] = self.scheduler.get_last_lr()[0]
 
-        if self.logger:
-            self.logger.log_val(avg_metrics)
-            self.logger.info(
-                f"[Val] iter={self.current_iteration} | "
-                f"PSNR: {avg_metrics['psnr']:.3f} | "
-                f"SSIM: {avg_metrics['ssim']:.3f} | "
-                f"LPIPS: {avg_metrics['lpips']:.4f} | "
-                f"Best PSNR: {self.best_psnr:.3f}"
-            )
+        return avg_metrics, sample_images
 
-            if avg_metrics["psnr"] > self.best_psnr:
-                self.best_psnr = avg_metrics["psnr"]
+    def _log_and_save_samples(self, avg_metrics: dict, sample_images: list):
+        """Log val metrics and save sample grid images. Called AFTER checkpoint save."""
+        if not self.logger:
+            return
 
-            # Save grid image: LQ | GT | Output, clamped to [0,1]
-            sample_dir = os.path.join(self.config.samples_dir, f"iter_{self.current_iteration:06d}")
-            os.makedirs(sample_dir, exist_ok=True)
-            for i, imgs in enumerate(sample_images):
-                grid = torch.cat([
-                    torch.clamp(imgs["lq"], 0, 1),
-                    torch.clamp(imgs["gt"], 0, 1),
-                    torch.clamp(imgs["output"], 0, 1),
-                ], dim=2)  # stack horizontally
-                save_image(grid, os.path.join(sample_dir, f"sample_{i}_lq_gt_output.png"), normalize=False)
+        self.logger.log_val(avg_metrics)
+        self.logger.info(
+            f"[Val] iter={self.current_iteration} | "
+            f"PSNR: {avg_metrics['psnr']:.3f} | "
+            f"SSIM: {avg_metrics['ssim']:.3f} | "
+            f"LPIPS: {avg_metrics['lpips']:.4f} | "
+            f"Best PSNR: {self.best_psnr:.3f}"
+        )
 
-        return avg_metrics
+        if avg_metrics["psnr"] > self.best_psnr:
+            self.best_psnr = avg_metrics["psnr"]
+
+        sample_dir = os.path.join(self.config.samples_dir, f"iter_{self.current_iteration:06d}")
+        os.makedirs(sample_dir, exist_ok=True)
+        for i, imgs in enumerate(sample_images):
+            grid = torch.cat([
+                torch.clamp(imgs["lq"], 0, 1),
+                torch.clamp(imgs["gt"], 0, 1),
+                torch.clamp(imgs["output"], 0, 1),
+            ], dim=2)
+            save_image(grid, os.path.join(sample_dir, f"sample_{i}_lq_gt_output.png"), normalize=False)
 
     def _save_checkpoint(self, metrics: dict):
         if self.ckpt_mgr:

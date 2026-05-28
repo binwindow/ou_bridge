@@ -34,6 +34,6 @@ Thumbs.db
 *.ckpt
 
 # Project meta (Claude Code, local config, spec)
-CLAUDE.md
+# CLAUDE.md
 pyproject.toml
 spec.md
