@@ -27,6 +27,7 @@ def parse_args():
     parser.add_argument("--lr", type=float, default=1e-4)
     parser.add_argument("--gpu", type=str, default="0")
     parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument("--num_steps_sampling", type=int, default=100)
     parser.add_argument("--num_val", type=int, default=15)
     parser.add_argument("--dataset", type=str, default="default")
     parser.add_argument("--data_root", type=str, default="")
@@ -54,6 +55,7 @@ def main():
         config.train.lr = args.lr
         config.train.gpu = args.gpu
         config.train.seed = args.seed
+        config.sde.num_steps_sampling = args.num_steps_sampling
         config.train.num_val = args.num_val
         config.data.dataset = args.dataset
         config.data.data_root = args.data_root
