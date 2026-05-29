@@ -7,4 +7,4 @@ python tasks/deraining/train.py \
   --gpu "${GPU:-0}" \
   --total_iterations 200000 \
   --num_steps_sampling 40 \
-  --data_root "$DATA_ROOT"
+  --data_root "$DATA_ROOT" "$@"

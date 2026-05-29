@@ -8,4 +8,4 @@ python tasks/deraining/train.py \
   --ema_beta 0.999 \
   --gpu "${GPU:-0}" \
   --total_iterations 200000 \
-  --data_root "$DATA_ROOT"
+  --data_root "$DATA_ROOT" "$@"

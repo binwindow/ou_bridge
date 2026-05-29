@@ -1,0 +1,10 @@
+[
+  {
+    "psnr": 6.257407765684636,
+    "ssim": 0.003255420414247577,
+    "lpips": NaN,
+    "iteration": 13333,
+    "rank": 1,
+    "ckpt_name": "topk_1_iter_013333_psnr_6.257.ckpt"
+  }
+]

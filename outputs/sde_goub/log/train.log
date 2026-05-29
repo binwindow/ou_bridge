@@ -1,0 +1,13 @@
+2026-05-28 21:40:36 | 
+── sde_goub ────────────────────────────────────────────────────
+  Model:    ConditionalUNet | 137,147,523 params
+  Data:     source/DeRain-H | train: 1254 | val: 100
+  Training: 200000 iters | batch: 8 | patch: 64 | AMP
+  Optim:    AdamW | lr: 0.0001 → 1e-06 (CosineAnnealingLR)
+  EMA:      β=0.999, every 1 step
+  SDE:      goub | GOUB | schedule=cosine | λ²=30.0 | NFE=100 | ε=0.005
+  Device:   CUDA:3 (NVIDIA GeForce RTX 3090)
+  Output:   outputs/sde_goub/
+────────────────────────────────────────────────────────────
+2026-05-28 22:22:50 | Checkpoint saved: ['topk_1_iter_013333_psnr_11.615.ckpt', 'last.ckpt']
+2026-05-28 22:22:50 | [Val] iter=13333 | PSNR: 11.615 | SSIM: 0.403 | LPIPS: 0.5294 | Best PSNR: 0.000

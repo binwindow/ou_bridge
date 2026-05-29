@@ -40,12 +40,15 @@ def main():
     args = parse_args()
 
     if args.resume:
-        # Resume: load config from saved config.json, only override runtime params
+        # Resume: load config from saved config.json, override runtime params
         config_path = os.path.join("outputs", args.exp_name, "log", "config.json")
         config = ExperimentConfig.from_json(config_path)
         config.exp_name = args.exp_name
         config.train.gpu = args.gpu
         config.data.data_root = args.data_root or config.data.data_root
+        config.sde.num_steps_sampling = args.num_steps_sampling
+        config.train.num_val = args.num_val
+        config.train.ema_beta = args.ema_beta
     else:
         config = ExperimentConfig(exp_name=args.exp_name)
         config.sde.sde_type = args.sde_type

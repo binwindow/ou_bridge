@@ -7,4 +7,4 @@ python tasks/deraining/train.py \
   --schedule constant \
   --gpu "${GPU:-0}" \
   --total_iterations 200000 \
-  --data_root "$DATA_ROOT"
+  --data_root "$DATA_ROOT" "$@"

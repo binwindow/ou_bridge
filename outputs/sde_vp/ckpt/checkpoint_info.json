@@ -1,0 +1,26 @@
+[
+  {
+    "psnr": 6.257407765684636,
+    "ssim": 0.003255420414247577,
+    "lpips": NaN,
+    "iteration": 13333,
+    "rank": 1,
+    "ckpt_name": "topk_1_iter_013333_psnr_6.257.ckpt"
+  },
+  {
+    "psnr": 6.257407765684636,
+    "ssim": 0.003255420414247577,
+    "lpips": NaN,
+    "iteration": 26666,
+    "rank": 2,
+    "ckpt_name": "topk_2_iter_026666_psnr_6.257.ckpt"
+  },
+  {
+    "psnr": 6.257407765684636,
+    "ssim": 0.003255420414247577,
+    "lpips": NaN,
+    "iteration": 40000,
+    "rank": 3,
+    "ckpt_name": "topk_3_iter_040000_psnr_6.257.ckpt"
+  }
+]

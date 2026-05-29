@@ -1,0 +1,25 @@
+2026-05-29 13:07:52 | 
+── goub_linear_ema0999 ─────────────────────────────────────────
+  Model:    ConditionalUNet | 137,147,523 params
+  Data:     source/DeRain-H | train: 1254 | val: 100
+  Training: 200000 iters | batch: 8 | patch: 64 | AMP
+  Optim:    AdamW | lr: 0.0001 → 1e-06 (CosineAnnealingLR)
+  EMA:      β=0.999, every 1 step
+  SDE:      goub | GOUB | schedule=linear | λ²=30.0 | NFE=100 | ε=0.005
+  Device:   CUDA:5 (NVIDIA GeForce RTX 3090)
+  Output:   outputs/goub_linear_ema0999/
+────────────────────────────────────────────────────────────
+2026-05-29 14:29:13 | Checkpoint saved: ['topk_1_iter_013333_psnr_6.257.ckpt', 'last.ckpt']
+2026-05-29 14:29:13 | [Val] iter=13333 | PSNR: 6.257 | SSIM: 0.003 | LPIPS: nan | Best PSNR: 0.000
+2026-05-29 14:41:12 | 
+── goub_linear_ema0999 ─────────────────────────────────────────
+  Model:    ConditionalUNet | 137,147,523 params
+  Data:     source/DeRain-H | train: 1254 | val: 100
+  Training: 200000 iters | batch: 8 | patch: 64 | AMP
+  Optim:    AdamW | lr: 0.0001 → 1e-06 (CosineAnnealingLR)
+  EMA:      β=0.999, every 1 step
+  SDE:      goub | GOUB | schedule=linear | λ²=30.0 | NFE=100 | ε=0.005
+  Device:   CUDA:6 (NVIDIA GeForce RTX 3090)
+  Output:   outputs/goub_linear_ema0999/
+────────────────────────────────────────────────────────────
+2026-05-29 14:41:14 | Resumed from iteration 13333, best PSNR: 6.257
