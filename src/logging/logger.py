@@ -40,7 +40,7 @@ class JSONLMetrics:
     def write(self, record: dict):
         if self._file is None:
             self.open()
-        record["timestamp"] = time.time()
+        record["timestamp"] = time.strftime("%Y-%m-%d %H:%M:%S")
         self._file.write(json.dumps(record) + "\n")
         self._file.flush()
 

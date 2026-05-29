@@ -6,7 +6,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 from torch.nn.parallel import DistributedDataParallel as DDP
-from torch.amp import GradScaler, autocast
+from torch.amp import autocast
 from torchvision.utils import save_image
 from tqdm import tqdm
 
@@ -101,9 +101,8 @@ class Trainer:
             eta_min=config.train.min_lr,
         )
 
-        # AMP
+        # AMP (BF16 — same dynamic range as FP32, no GradScaler needed)
         self.use_amp = config.train.use_amp and self.device.type == "cuda"
-        self.scaler = GradScaler("cuda") if self.use_amp and self.device.type == "cuda" else None
 
         # DDP wrap
         if self.use_ddp:
@@ -193,15 +192,12 @@ class Trainer:
             self.optimizer.zero_grad()
 
             if self.use_amp:
-                with autocast("cuda"):
+                with autocast("cuda", dtype=torch.bfloat16):
                     loss = self.model.optimize_parameters(timesteps, self.sde)
-                self.scaler.scale(loss).backward()
-                self.scaler.step(self.optimizer)
-                self.scaler.update()
             else:
                 loss = self.model.optimize_parameters(timesteps, self.sde)
-                loss.backward()
-                self.optimizer.step()
+            loss.backward()
+            self.optimizer.step()
 
             # EMA update every step
             self.model.ema.update(self.model.model)
@@ -282,7 +278,7 @@ class Trainer:
         total_params = model_info["total_params"]
         train_size = len(self.train_loader.dataset)
         val_size = len(self.val_loader.dataset)
-        amp_status = "AMP" if cfg.train.use_amp else "FP32"
+        amp_status = "BF16" if cfg.train.use_amp else "FP32"
         gpu_str = os.environ.get("CUDA_VISIBLE_DEVICES", "0")
         device_str = f"CUDA:{gpu_str} ({torch.cuda.get_device_name(0)})" if torch.cuda.is_available() else "CPU"
 

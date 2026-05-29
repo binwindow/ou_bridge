@@ -80,8 +80,9 @@ python tasks/deraining/train.py --exp_name my_exp --resume --gpu 2
 ## 可视化
 
 ```bash
-jupyter notebook visualization.ipynb
-```
+# Theta 调度对比
+jupyter notebook tasks/deraining/theta_exploration/visualize.ipynb
 
-- `visualize_single("derain_cosine")` — 单实验诊断
-- `compare_experiments(["derain_cosine", "derain_linear", "derain_constant"])` — theta 对比
+# SDE 桥对比
+jupyter notebook tasks/deraining/sde_comparison/visualize.ipynb
+```
