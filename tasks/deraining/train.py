@@ -32,6 +32,7 @@ def parse_args():
     parser.add_argument("--num_val", type=int, default=15)
     parser.add_argument("--dataset", type=str, default="default")
     parser.add_argument("--data_root", type=str, default="")
+    parser.add_argument("--no_amp", action="store_true", help="Disable AMP (use FP32)")
     parser.add_argument("--resume", action="store_true", help="Resume from last checkpoint")
     return parser.parse_args()
 
@@ -64,6 +65,9 @@ def main():
         config.train.num_val = args.num_val
         config.data.dataset = args.dataset
         config.data.data_root = args.data_root
+
+    if args.no_amp:
+        config.train.use_amp = False
 
     trainer = Trainer(config)
 
