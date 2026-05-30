@@ -145,8 +145,8 @@ class Trainer:
 
         self.val_loader = create_dataloader(
             cfg.data.dataset,
-            batch_size=1,
-            num_workers=1,
+            batch_size=cfg.train.val_batch_size,
+            num_workers=cfg.data.num_workers,
             phase="val",
             **data_kwargs,
         )

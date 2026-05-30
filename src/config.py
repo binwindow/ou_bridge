@@ -47,6 +47,7 @@ class TrainConfig:
     gpu: str = "0"
     use_amp: bool = True
     use_ddp: bool = False
+    val_batch_size: int = 4
     seed: int = 42
     num_val: int = 15
     log_every: int = 100
