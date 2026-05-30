@@ -1,10 +1,26 @@
 [
   {
-    "psnr": 6.257407765684636,
-    "ssim": 0.003255420414247577,
-    "lpips": NaN,
-    "iteration": 13333,
+    "psnr": 20.00071082791356,
+    "ssim": 0.6354229628076603,
+    "lpips": 0.29430210493505,
+    "iteration": 80000,
     "rank": 1,
-    "ckpt_name": "topk_1_iter_013333_psnr_6.257.ckpt"
+    "ckpt_name": "topk_1_iter_080000_psnr_20.001.ckpt"
+  },
+  {
+    "psnr": 19.880113085998357,
+    "ssim": 0.6373922446733649,
+    "lpips": 0.29260970816016196,
+    "iteration": 66666,
+    "rank": 2,
+    "ckpt_name": "topk_2_iter_066666_psnr_19.880.ckpt"
+  },
+  {
+    "psnr": 19.169406161414805,
+    "ssim": 0.6006466390407189,
+    "lpips": 0.3327642051875591,
+    "iteration": 106666,
+    "rank": 3,
+    "ckpt_name": "topk_3_iter_106666_psnr_19.169.ckpt"
   }
 ]

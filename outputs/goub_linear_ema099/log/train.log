@@ -11,3 +11,31 @@
 ────────────────────────────────────────────────────────────
 2026-05-29 14:28:34 | Checkpoint saved: ['topk_1_iter_013333_psnr_11.080.ckpt', 'last.ckpt']
 2026-05-29 14:28:34 | [Val] iter=13333 | PSNR: 11.080 | SSIM: 0.409 | LPIPS: 0.5169 | Best PSNR: 0.000
+2026-05-29 15:13:20 | Checkpoint saved: ['topk_1_iter_026666_psnr_12.022.ckpt', 'topk_2_iter_013333_psnr_11.080.ckpt', 'last.ckpt']
+2026-05-29 15:13:20 | [Val] iter=26666 | PSNR: 12.022 | SSIM: 0.391 | LPIPS: 0.5374 | Best PSNR: 11.080
+2026-05-29 15:56:54 | Checkpoint saved: ['topk_1_iter_040000_psnr_14.983.ckpt', 'topk_2_iter_026666_psnr_12.022.ckpt', 'topk_3_iter_013333_psnr_11.080.ckpt', 'last.ckpt']
+2026-05-29 15:56:54 | [Val] iter=40000 | PSNR: 14.983 | SSIM: 0.514 | LPIPS: 0.4171 | Best PSNR: 12.022
+2026-05-29 16:40:42 | Checkpoint saved: ['topk_1_iter_053333_psnr_18.137.ckpt', 'topk_2_iter_040000_psnr_14.983.ckpt', 'topk_3_iter_026666_psnr_12.022.ckpt', 'last.ckpt']
+2026-05-29 16:40:42 | [Val] iter=53333 | PSNR: 18.137 | SSIM: 0.634 | LPIPS: 0.2929 | Best PSNR: 14.983
+2026-05-29 17:24:10 | Checkpoint saved: ['topk_1_iter_066666_psnr_19.977.ckpt', 'topk_2_iter_053333_psnr_18.137.ckpt', 'topk_3_iter_040000_psnr_14.983.ckpt', 'last.ckpt']
+2026-05-29 17:24:10 | [Val] iter=66666 | PSNR: 19.977 | SSIM: 0.681 | LPIPS: 0.2491 | Best PSNR: 18.137
+2026-05-29 18:07:46 | Checkpoint saved: ['topk_1_iter_080000_psnr_20.435.ckpt', 'topk_2_iter_066666_psnr_19.977.ckpt', 'topk_3_iter_053333_psnr_18.137.ckpt', 'last.ckpt']
+2026-05-29 18:07:46 | [Val] iter=80000 | PSNR: 20.435 | SSIM: 0.683 | LPIPS: 0.2494 | Best PSNR: 19.977
+2026-05-29 18:51:37 | Checkpoint saved: ['topk_1_iter_093333_psnr_21.617.ckpt', 'topk_2_iter_080000_psnr_20.435.ckpt', 'topk_3_iter_066666_psnr_19.977.ckpt', 'last.ckpt']
+2026-05-29 18:51:37 | [Val] iter=93333 | PSNR: 21.617 | SSIM: 0.700 | LPIPS: 0.2309 | Best PSNR: 20.435
+2026-05-29 19:35:15 | Checkpoint saved: ['topk_2_iter_106666_psnr_20.896.ckpt', 'topk_3_iter_080000_psnr_20.435.ckpt', 'last.ckpt']
+2026-05-29 19:35:15 | [Val] iter=106666 | PSNR: 20.896 | SSIM: 0.695 | LPIPS: 0.2384 | Best PSNR: 21.617
+2026-05-29 20:19:00 | Checkpoint saved: ['topk_1_iter_120000_psnr_21.818.ckpt', 'topk_2_iter_093333_psnr_21.617.ckpt', 'topk_3_iter_106666_psnr_20.896.ckpt', 'last.ckpt']
+2026-05-29 20:19:00 | [Val] iter=120000 | PSNR: 21.818 | SSIM: 0.703 | LPIPS: 0.2340 | Best PSNR: 21.617
+2026-05-29 21:02:49 | Checkpoint saved: ['topk_2_iter_133333_psnr_21.679.ckpt', 'topk_3_iter_093333_psnr_21.617.ckpt', 'last.ckpt']
+2026-05-29 21:02:49 | [Val] iter=133333 | PSNR: 21.679 | SSIM: 0.702 | LPIPS: 0.2342 | Best PSNR: 21.818
+2026-05-29 21:45:58 | Checkpoint saved: ['last.ckpt']
+2026-05-29 21:45:58 | [Val] iter=146666 | PSNR: 20.985 | SSIM: 0.699 | LPIPS: 0.2373 | Best PSNR: 21.818
+2026-05-29 22:29:32 | Checkpoint saved: ['last.ckpt']
+2026-05-29 22:29:32 | [Val] iter=160000 | PSNR: 21.397 | SSIM: 0.703 | LPIPS: 0.2341 | Best PSNR: 21.818
+2026-05-29 23:13:21 | Checkpoint saved: ['topk_1_iter_173333_psnr_21.906.ckpt', 'topk_2_iter_120000_psnr_21.818.ckpt', 'topk_3_iter_133333_psnr_21.679.ckpt', 'last.ckpt']
+2026-05-29 23:13:21 | [Val] iter=173333 | PSNR: 21.906 | SSIM: 0.703 | LPIPS: 0.2334 | Best PSNR: 21.818
+2026-05-29 23:57:00 | Checkpoint saved: ['topk_3_iter_186666_psnr_21.682.ckpt', 'last.ckpt']
+2026-05-29 23:57:00 | [Val] iter=186666 | PSNR: 21.682 | SSIM: 0.701 | LPIPS: 0.2374 | Best PSNR: 21.906
+2026-05-30 00:40:41 | Checkpoint saved: ['topk_3_iter_200000_psnr_21.728.ckpt', 'last.ckpt']
+2026-05-30 00:40:41 | [Val] iter=200000 | PSNR: 21.728 | SSIM: 0.702 | LPIPS: 0.2366 | Best PSNR: 21.906
