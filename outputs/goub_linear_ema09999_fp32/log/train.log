@@ -1,0 +1,17 @@
+2026-05-30 14:08:17 | 
+── goub_linear_ema09999_fp32 ───────────────────────────────────
+  Model:    ConditionalUNet | 137,147,523 params
+  Data:     source/DeRain-H | train: 1254 | val: 100
+  Training: 200000 iters | batch: 8 | patch: 64 | FP32
+  Optim:    AdamW | lr: 0.0001 → 1e-06 (CosineAnnealingLR)
+  EMA:      β=0.9999, every 1 step
+  SDE:      goub | GOUB | schedule=linear | λ²=30.0 | NFE=100 | ε=0.005
+  Device:   CUDA:6 (NVIDIA GeForce RTX 3090)
+  Output:   outputs/goub_linear_ema09999_fp32/
+────────────────────────────────────────────────────────────
+2026-05-30 14:51:09 | Checkpoint saved: ['topk_1_iter_013333_psnr_5.480.ckpt', 'last.ckpt']
+2026-05-30 14:51:09 | [Val] iter=13333 | PSNR: 5.480 | SSIM: 0.001 | LPIPS: 1.1517 | Best PSNR: 0.000
+2026-05-30 15:34:02 | Checkpoint saved: ['topk_2_iter_026666_psnr_5.321.ckpt', 'last.ckpt']
+2026-05-30 15:34:02 | [Val] iter=26666 | PSNR: 5.321 | SSIM: 0.220 | LPIPS: 0.9658 | Best PSNR: 5.480
+2026-05-30 16:18:26 | Checkpoint saved: ['topk_3_iter_040000_psnr_5.232.ckpt', 'last.ckpt']
+2026-05-30 16:18:26 | [Val] iter=40000 | PSNR: 5.232 | SSIM: 0.003 | LPIPS: 1.2784 | Best PSNR: 5.480
