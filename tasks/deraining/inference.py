@@ -26,7 +26,7 @@ from src.trainer import set_seed
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--exp_name", type=str, required=True)
-    parser.add_argument("--ckpt", type=str, default="last", help="ckpt name or path, e.g. 'last' or 'topk_1_xxx.ckpt'")
+    parser.add_argument("--ckpt", type=str, default="last", help="ckpt name or path, e.g. 'last' or 'iter_001000_psnr_25.000.ckpt'")
     parser.add_argument("--gpu", type=str, default="0")
     parser.add_argument("--data_root", type=str, default="source/DeRain-H")
     parser.add_argument("--batch_size", type=int, default=1)

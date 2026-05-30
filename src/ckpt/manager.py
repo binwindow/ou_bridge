@@ -43,35 +43,33 @@ class CheckpointManager:
         """
         saved = []
 
-        # Update top-k by PSNR first, so last.ckpt includes it
         if metrics is not None and "psnr" in metrics:
             psnr = metrics["psnr"]
-            self._topk_info.append({
+            ckpt_name = f"iter_{iteration:06d}_psnr_{psnr:.3f}.ckpt"
+
+            # Save new entry before registering, so crash won't leave
+            # checkpoint_info.json pointing to a missing file.
+            entry_path = self._ckpt_path(ckpt_name)
+            if not os.path.exists(entry_path):
+                self._save_checkpoint(entry_path, model, ema_model, optimizer, scheduler, iteration)
+                saved.append(ckpt_name)
+
+            entry = {
                 "psnr": psnr,
                 "ssim": metrics.get("ssim", None),
                 "lpips": metrics.get("lpips", None),
                 "iteration": iteration,
-            })
+                "ckpt_name": ckpt_name,
+            }
+            self._topk_info.append(entry)
             self._topk_info.sort(key=lambda x: x["psnr"], reverse=True)
 
-            # Assign ranks and ckpt names
-            for rank, entry in enumerate(self._topk_info, 1):
-                entry["rank"] = rank
-                entry["ckpt_name"] = f"topk_{rank}_iter_{entry['iteration']:06d}_psnr_{entry['psnr']:.3f}.ckpt"
-
-            # Keep top-k, remove old files
+            # Evict entries beyond top-k
             while len(self._topk_info) > self.topk:
                 removed = self._topk_info.pop()
                 removed_path = self._ckpt_path(removed["ckpt_name"])
                 if os.path.exists(removed_path):
                     os.remove(removed_path)
-
-            # Save new top-k entries that don't exist yet
-            for entry in self._topk_info:
-                entry_path = self._ckpt_path(entry["ckpt_name"])
-                if not os.path.exists(entry_path):
-                    self._save_checkpoint(entry_path, model, ema_model, optimizer, scheduler, iteration)
-                    saved.append(entry["ckpt_name"])
 
             self._save_topk_info()
 
