@@ -209,13 +209,13 @@ class Trainer:
                 self.scaler.scale(loss).backward()
                 self.scaler.unscale_(self.optimizer)
                 grad_norm = torch.nn.utils.clip_grad_norm_(
-                    self.model.model.parameters(), self.max_grad_norm)
+                    self.model.model.parameters(), self.max_grad_norm).item()
                 self.scaler.step(self.optimizer)
                 self.scaler.update()
             else:
                 loss.backward()
                 grad_norm = torch.nn.utils.clip_grad_norm_(
-                    self.model.model.parameters(), self.max_grad_norm)
+                    self.model.model.parameters(), self.max_grad_norm).item()
                 self.optimizer.step()
 
             # EMA update every step
