@@ -1,4 +1,4 @@
-2026-05-30 14:08:52 | 
+2026-05-31 02:06:39 | 
 ── goub_linear_ema0999_fp32 ────────────────────────────────────
   Model:    ConditionalUNet | 137,147,523 params
   Data:     source/DeRain-H | train: 1254 | val: 100
@@ -9,9 +9,33 @@
   Device:   CUDA:5 (NVIDIA GeForce RTX 3090)
   Output:   outputs/goub_linear_ema0999_fp32/
 ────────────────────────────────────────────────────────────
-2026-05-30 14:54:25 | Checkpoint saved: ['topk_1_iter_013333_psnr_6.257.ckpt', 'last.ckpt']
-2026-05-30 14:54:25 | [Val] iter=13333 | PSNR: 6.257 | SSIM: 0.003 | LPIPS: nan | Best PSNR: 0.000
-2026-05-30 15:40:30 | Checkpoint saved: ['topk_1_iter_026666_psnr_9.590.ckpt', 'topk_2_iter_013333_psnr_6.257.ckpt', 'last.ckpt']
-2026-05-30 15:40:30 | [Val] iter=26666 | PSNR: 9.590 | SSIM: 0.199 | LPIPS: 0.7929 | Best PSNR: 6.257
-2026-05-30 16:27:06 | Checkpoint saved: ['topk_1_iter_040000_psnr_16.166.ckpt', 'topk_2_iter_026666_psnr_9.590.ckpt', 'topk_3_iter_013333_psnr_6.257.ckpt', 'last.ckpt']
-2026-05-30 16:27:06 | [Val] iter=40000 | PSNR: 16.166 | SSIM: 0.320 | LPIPS: 0.5797 | Best PSNR: 9.590
+2026-05-31 02:29:05 | Checkpoint saved: ['iter_013333_psnr_14.638.ckpt', 'last.ckpt']
+2026-05-31 02:29:05 | [Val] iter=13333 | PSNR: 14.638 | SSIM: 0.486 | LPIPS: 0.2485 | Best PSNR: 0.000
+2026-05-31 02:52:15 | Checkpoint saved: ['iter_026666_psnr_15.959.ckpt', 'last.ckpt']
+2026-05-31 02:52:15 | [Val] iter=26666 | PSNR: 15.959 | SSIM: 0.541 | LPIPS: 0.2058 | Best PSNR: 14.638
+2026-05-31 03:14:54 | Checkpoint saved: ['iter_040000_psnr_6.270.ckpt', 'last.ckpt']
+2026-05-31 03:14:54 | [Val] iter=40000 | PSNR: 6.270 | SSIM: 0.002 | LPIPS: nan | Best PSNR: 15.959
+2026-05-31 03:37:52 | Checkpoint saved: ['iter_053333_psnr_15.460.ckpt', 'last.ckpt']
+2026-05-31 03:37:52 | [Val] iter=53333 | PSNR: 15.460 | SSIM: 0.337 | LPIPS: 0.4124 | Best PSNR: 15.959
+2026-05-31 04:00:46 | Checkpoint saved: ['iter_066666_psnr_16.103.ckpt', 'last.ckpt']
+2026-05-31 04:00:46 | [Val] iter=66666 | PSNR: 16.103 | SSIM: 0.532 | LPIPS: 0.2405 | Best PSNR: 15.959
+2026-05-31 04:23:47 | Checkpoint saved: ['iter_080000_psnr_19.990.ckpt', 'last.ckpt']
+2026-05-31 04:23:47 | [Val] iter=80000 | PSNR: 19.990 | SSIM: 0.670 | LPIPS: 0.1060 | Best PSNR: 16.103
+2026-05-31 04:46:47 | Checkpoint saved: ['iter_093333_psnr_22.181.ckpt', 'last.ckpt']
+2026-05-31 04:46:47 | [Val] iter=93333 | PSNR: 22.181 | SSIM: 0.725 | LPIPS: 0.0797 | Best PSNR: 19.990
+2026-05-31 05:09:39 | Checkpoint saved: ['iter_106666_psnr_22.957.ckpt', 'last.ckpt']
+2026-05-31 05:09:39 | [Val] iter=106666 | PSNR: 22.957 | SSIM: 0.747 | LPIPS: 0.0657 | Best PSNR: 22.181
+2026-05-31 05:32:27 | Checkpoint saved: ['iter_120000_psnr_23.404.ckpt', 'last.ckpt']
+2026-05-31 05:32:27 | [Val] iter=120000 | PSNR: 23.404 | SSIM: 0.753 | LPIPS: 0.0669 | Best PSNR: 22.957
+2026-05-31 05:55:10 | Checkpoint saved: ['iter_133333_psnr_24.060.ckpt', 'last.ckpt']
+2026-05-31 05:55:10 | [Val] iter=133333 | PSNR: 24.060 | SSIM: 0.765 | LPIPS: 0.0603 | Best PSNR: 23.404
+2026-05-31 06:18:09 | Checkpoint saved: ['iter_146666_psnr_24.146.ckpt', 'last.ckpt']
+2026-05-31 06:18:09 | [Val] iter=146666 | PSNR: 24.146 | SSIM: 0.769 | LPIPS: 0.0596 | Best PSNR: 24.060
+2026-05-31 06:40:50 | Checkpoint saved: ['iter_160000_psnr_24.449.ckpt', 'last.ckpt']
+2026-05-31 06:40:50 | [Val] iter=160000 | PSNR: 24.449 | SSIM: 0.772 | LPIPS: 0.0572 | Best PSNR: 24.146
+2026-05-31 07:03:39 | Checkpoint saved: ['iter_173333_psnr_24.669.ckpt', 'last.ckpt']
+2026-05-31 07:03:39 | [Val] iter=173333 | PSNR: 24.669 | SSIM: 0.776 | LPIPS: 0.0570 | Best PSNR: 24.449
+2026-05-31 07:26:26 | Checkpoint saved: ['iter_186666_psnr_24.652.ckpt', 'last.ckpt']
+2026-05-31 07:26:26 | [Val] iter=186666 | PSNR: 24.652 | SSIM: 0.776 | LPIPS: 0.0546 | Best PSNR: 24.669
+2026-05-31 07:49:13 | Checkpoint saved: ['iter_200000_psnr_24.500.ckpt', 'last.ckpt']
+2026-05-31 07:49:13 | [Val] iter=200000 | PSNR: 24.500 | SSIM: 0.776 | LPIPS: 0.0531 | Best PSNR: 24.669

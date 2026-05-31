@@ -1,4 +1,4 @@
-2026-05-30 14:09:13 | 
+2026-05-31 02:08:04 | 
 ── goub_linear_ema099_fp32 ─────────────────────────────────────
   Model:    ConditionalUNet | 137,147,523 params
   Data:     source/DeRain-H | train: 1254 | val: 100
@@ -6,12 +6,36 @@
   Optim:    AdamW | lr: 0.0001 → 1e-06 (CosineAnnealingLR)
   EMA:      β=0.99, every 1 step
   SDE:      goub | GOUB | schedule=linear | λ²=30.0 | NFE=100 | ε=0.005
-  Device:   CUDA:4 (NVIDIA GeForce RTX 3090)
+  Device:   CUDA:8 (NVIDIA GeForce RTX 3090)
   Output:   outputs/goub_linear_ema099_fp32/
 ────────────────────────────────────────────────────────────
-2026-05-30 14:52:13 | Checkpoint saved: ['topk_1_iter_013333_psnr_12.882.ckpt', 'last.ckpt']
-2026-05-30 14:52:13 | [Val] iter=13333 | PSNR: 12.882 | SSIM: 0.437 | LPIPS: 0.4871 | Best PSNR: 0.000
-2026-05-30 15:35:22 | Checkpoint saved: ['topk_1_iter_026666_psnr_15.453.ckpt', 'topk_2_iter_013333_psnr_12.882.ckpt', 'last.ckpt']
-2026-05-30 15:35:22 | [Val] iter=26666 | PSNR: 15.453 | SSIM: 0.308 | LPIPS: 0.5985 | Best PSNR: 12.882
-2026-05-30 16:39:19 | Checkpoint saved: ['topk_3_iter_040000_psnr_12.787.ckpt', 'last.ckpt']
-2026-05-30 16:39:19 | [Val] iter=40000 | PSNR: 12.787 | SSIM: 0.234 | LPIPS: 0.6550 | Best PSNR: 15.453
+2026-05-31 02:29:41 | Checkpoint saved: ['iter_013333_psnr_14.642.ckpt', 'last.ckpt']
+2026-05-31 02:29:41 | [Val] iter=13333 | PSNR: 14.642 | SSIM: 0.486 | LPIPS: 0.2438 | Best PSNR: 0.000
+2026-05-31 02:52:16 | Checkpoint saved: ['iter_026666_psnr_15.594.ckpt', 'last.ckpt']
+2026-05-31 02:52:16 | [Val] iter=26666 | PSNR: 15.594 | SSIM: 0.523 | LPIPS: 0.2144 | Best PSNR: 14.642
+2026-05-31 03:14:17 | Checkpoint saved: ['iter_040000_psnr_11.764.ckpt', 'last.ckpt']
+2026-05-31 03:14:17 | [Val] iter=40000 | PSNR: 11.764 | SSIM: 0.245 | LPIPS: 0.5177 | Best PSNR: 15.594
+2026-05-31 03:36:06 | Checkpoint saved: ['iter_053333_psnr_15.469.ckpt', 'last.ckpt']
+2026-05-31 03:36:06 | [Val] iter=53333 | PSNR: 15.469 | SSIM: 0.337 | LPIPS: 0.4067 | Best PSNR: 15.594
+2026-05-31 03:57:52 | Checkpoint saved: ['iter_066666_psnr_15.076.ckpt', 'last.ckpt']
+2026-05-31 03:57:52 | [Val] iter=66666 | PSNR: 15.076 | SSIM: 0.496 | LPIPS: 0.2685 | Best PSNR: 15.594
+2026-05-31 04:19:43 | Checkpoint saved: ['iter_080000_psnr_19.613.ckpt', 'last.ckpt']
+2026-05-31 04:19:43 | [Val] iter=80000 | PSNR: 19.613 | SSIM: 0.660 | LPIPS: 0.1089 | Best PSNR: 15.594
+2026-05-31 04:41:39 | Checkpoint saved: ['iter_093333_psnr_22.021.ckpt', 'last.ckpt']
+2026-05-31 04:41:39 | [Val] iter=93333 | PSNR: 22.021 | SSIM: 0.721 | LPIPS: 0.0806 | Best PSNR: 19.613
+2026-05-31 05:03:32 | Checkpoint saved: ['iter_106666_psnr_22.849.ckpt', 'last.ckpt']
+2026-05-31 05:03:32 | [Val] iter=106666 | PSNR: 22.849 | SSIM: 0.743 | LPIPS: 0.0667 | Best PSNR: 22.021
+2026-05-31 05:25:34 | Checkpoint saved: ['iter_120000_psnr_23.431.ckpt', 'last.ckpt']
+2026-05-31 05:25:34 | [Val] iter=120000 | PSNR: 23.431 | SSIM: 0.752 | LPIPS: 0.0667 | Best PSNR: 22.849
+2026-05-31 05:47:27 | Checkpoint saved: ['iter_133333_psnr_23.962.ckpt', 'last.ckpt']
+2026-05-31 05:47:27 | [Val] iter=133333 | PSNR: 23.962 | SSIM: 0.763 | LPIPS: 0.0611 | Best PSNR: 23.431
+2026-05-31 06:09:12 | Checkpoint saved: ['iter_146666_psnr_24.153.ckpt', 'last.ckpt']
+2026-05-31 06:09:12 | [Val] iter=146666 | PSNR: 24.153 | SSIM: 0.769 | LPIPS: 0.0600 | Best PSNR: 23.962
+2026-05-31 06:31:00 | Checkpoint saved: ['iter_160000_psnr_24.412.ckpt', 'last.ckpt']
+2026-05-31 06:31:00 | [Val] iter=160000 | PSNR: 24.412 | SSIM: 0.772 | LPIPS: 0.0578 | Best PSNR: 24.153
+2026-05-31 06:52:57 | Checkpoint saved: ['iter_173333_psnr_24.609.ckpt', 'last.ckpt']
+2026-05-31 06:52:57 | [Val] iter=173333 | PSNR: 24.609 | SSIM: 0.774 | LPIPS: 0.0578 | Best PSNR: 24.412
+2026-05-31 07:14:48 | Checkpoint saved: ['iter_186666_psnr_24.628.ckpt', 'last.ckpt']
+2026-05-31 07:14:48 | [Val] iter=186666 | PSNR: 24.628 | SSIM: 0.776 | LPIPS: 0.0544 | Best PSNR: 24.609
+2026-05-31 07:36:42 | Checkpoint saved: ['iter_200000_psnr_24.492.ckpt', 'last.ckpt']
+2026-05-31 07:36:42 | [Val] iter=200000 | PSNR: 24.492 | SSIM: 0.776 | LPIPS: 0.0529 | Best PSNR: 24.628

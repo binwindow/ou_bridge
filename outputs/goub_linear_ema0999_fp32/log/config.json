@@ -36,6 +36,7 @@
     "gpu": "5",
     "use_amp": false,
     "use_ddp": false,
+    "val_batch_size": 4,
     "seed": 42,
     "num_val": 15,
     "log_every": 100,

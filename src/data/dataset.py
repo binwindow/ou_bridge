@@ -50,9 +50,9 @@ class PairedImageDataset(data.Dataset):
         img_lq = util.read_img(lq_path)
         img_gt = util.read_img(gt_path)
 
+        # Crop to patch_size
+        H, W, _ = img_lq.shape
         if self.phase == "train":
-            # random crop
-            H, W, _ = img_lq.shape
             if H < self.patch_size or W < self.patch_size:
                 raise RuntimeError(f"Image {lq_path} ({H}x{W}) smaller than patch_size {self.patch_size}")
 
@@ -63,6 +63,11 @@ class PairedImageDataset(data.Dataset):
 
             # augmentation
             img_lq, img_gt = util.augment([img_lq, img_gt], self.use_flip, self.use_rot)
+        else:
+            h_start = (H - self.patch_size) // 2
+            w_start = (W - self.patch_size) // 2
+            img_lq = img_lq[h_start:h_start + self.patch_size, w_start:w_start + self.patch_size, :]
+            img_gt = img_gt[h_start:h_start + self.patch_size, w_start:w_start + self.patch_size, :]
 
         # HWC BGR -> CHW RGB tensor
         img_lq = util.img2tensor(img_lq)

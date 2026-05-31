@@ -5,6 +5,6 @@
     "lpips": 0.5294126045703887,
     "iteration": 13333,
     "rank": 1,
-    "ckpt_name": "topk_1_iter_013333_psnr_11.615.ckpt"
+    "ckpt_name": "iter_013333_psnr_11.615.ckpt"
   }
 ]

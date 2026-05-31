@@ -5,7 +5,7 @@
     "lpips": 0.29430210493505,
     "iteration": 80000,
     "rank": 1,
-    "ckpt_name": "topk_1_iter_080000_psnr_20.001.ckpt"
+    "ckpt_name": "iter_080000_psnr_20.001.ckpt"
   },
   {
     "psnr": 19.880113085998357,
@@ -13,7 +13,7 @@
     "lpips": 0.29260970816016196,
     "iteration": 66666,
     "rank": 2,
-    "ckpt_name": "topk_2_iter_066666_psnr_19.880.ckpt"
+    "ckpt_name": "iter_066666_psnr_19.880.ckpt"
   },
   {
     "psnr": 19.169406161414805,
@@ -21,6 +21,6 @@
     "lpips": 0.3327642051875591,
     "iteration": 106666,
     "rank": 3,
-    "ckpt_name": "topk_3_iter_106666_psnr_19.169.ckpt"
+    "ckpt_name": "iter_106666_psnr_19.169.ckpt"
   }
 ]

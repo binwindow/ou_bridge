@@ -58,7 +58,7 @@ class TrainConfig:
 class DataConfig:
     dataset: str = "default"
     data_root: str = ""
-    num_workers: int = 4
+    num_workers: int = 8
     use_flip: bool = True
     use_rot: bool = True
 
