@@ -27,3 +27,5 @@
 2026-05-31 20:42:59 | [Val] iter=106666 | PSNR: 18.051 | SSIM: 0.617 | LPIPS: 0.1833 | Best PSNR: 17.303
 2026-05-31 21:04:44 | Checkpoint saved: ['iter_120000_psnr_18.533.ckpt', 'last.ckpt']
 2026-05-31 21:04:44 | [Val] iter=120000 | PSNR: 18.533 | SSIM: 0.627 | LPIPS: 0.1783 | Best PSNR: 18.051
+2026-05-31 21:26:36 | Checkpoint saved: ['iter_133333_psnr_18.823.ckpt', 'last.ckpt']
+2026-05-31 21:26:36 | [Val] iter=133333 | PSNR: 18.823 | SSIM: 0.634 | LPIPS: 0.1706 | Best PSNR: 18.533

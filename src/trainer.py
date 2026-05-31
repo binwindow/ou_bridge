@@ -104,9 +104,7 @@ class Trainer:
 
         # Precision: fp32 | fp16 (with GradScaler) | bf16
         self.precision = config.train.precision
-        self.scaler = torch.amp.GradScaler("cuda", init_scale=128.0,
-                                           growth_interval=500,
-                                           backoff_factor=0.5) if self.precision == "fp16" else None
+        self.scaler = torch.amp.GradScaler("cuda") if self.precision == "fp16" else None
 
         # DDP wrap
         if self.use_ddp:
