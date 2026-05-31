@@ -26,16 +26,16 @@ def parse_args():
     parser.add_argument("--patch_size", type=int, default=64)
     parser.add_argument("--lr", type=float, default=1e-4)
     parser.add_argument("--gpu", type=str, default="0")
-    parser.add_argument("--ema_beta", type=float, default=0.999)
+    parser.add_argument("--ema_beta", type=float, default=0.9999)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--num_steps_sampling", type=int, default=100)
     parser.add_argument("--num_val", type=int, default=15)
     parser.add_argument("--dataset", type=str, default="default")
     parser.add_argument("--data_root", type=str, default="")
-    parser.add_argument("--no_amp", action="store_true", help="Disable AMP (use FP32)")
+    parser.add_argument("--precision", type=str, default="bf16",
+                        choices=["fp32", "fp16", "bf16"],
+                        help="Training precision (fp32=fp32, fp16=fp16+scalar, bf16=bf16)")
     parser.add_argument("--resume", action="store_true", help="Resume from last checkpoint")
-    parser.add_argument("--cudnn_deterministic", action="store_true",
-                        help="Enable deterministic cuDNN (benchmark=False, deterministic=True)")
     return parser.parse_args()
 
 
@@ -52,7 +52,6 @@ def main():
         config.sde.num_steps_sampling = args.num_steps_sampling
         config.train.num_val = args.num_val
         config.train.ema_beta = args.ema_beta
-        config.train.cudnn_deterministic = args.cudnn_deterministic
     else:
         config = ExperimentConfig(exp_name=args.exp_name)
         config.sde.sde_type = args.sde_type
@@ -64,14 +63,12 @@ def main():
         config.train.gpu = args.gpu
         config.train.ema_beta = args.ema_beta
         config.train.seed = args.seed
-        config.train.cudnn_deterministic = args.cudnn_deterministic
         config.sde.num_steps_sampling = args.num_steps_sampling
         config.train.num_val = args.num_val
         config.data.dataset = args.dataset
         config.data.data_root = args.data_root
 
-    if args.no_amp:
-        config.train.use_amp = False
+    config.train.precision = args.precision
 
     trainer = Trainer(config)
 

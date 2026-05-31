@@ -42,24 +42,23 @@ class TrainConfig:
     weight_decay: float = 0.01
     beta1: float = 0.9
     beta2: float = 0.999
-    ema_beta: float = 0.999
+    ema_beta: float = 0.9999
     ema_update_every: int = 1
     gpu: str = "0"
-    use_amp: bool = True
+    precision: str = "bf16"     # "fp32" | "fp16" | "bf16"
     use_ddp: bool = False
     val_batch_size: int = 4
     seed: int = 42
     num_val: int = 15
     log_every: int = 100
     loss_type: str = "l1"
-    cudnn_deterministic: bool = False
 
 
 @dataclass
 class DataConfig:
     dataset: str = "default"
     data_root: str = ""
-    num_workers: int = 8
+    num_workers: int = 4
     use_flip: bool = True
     use_rot: bool = True
 

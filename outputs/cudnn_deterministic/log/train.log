@@ -1,0 +1,11 @@
+2026-05-31 10:57:36 | 
+── cudnn_deterministic ─────────────────────────────────────────
+  Model:    ConditionalUNet | 137,147,523 params
+  Data:     source/DeRain-H | train: 1254 | val: 100
+  Training: 200000 iters | batch: 8 | patch: 64 | FP32
+  Optim:    AdamW | lr: 0.0001 → 1e-06 (CosineAnnealingLR)
+  EMA:      β=0.999, every 1 step
+  SDE:      goub | GOUB | schedule=linear | λ²=30.0 | NFE=100 | ε=0.005
+  Device:   CUDA:5 (NVIDIA GeForce RTX 3090)
+  Output:   outputs/cudnn_deterministic/
+────────────────────────────────────────────────────────────

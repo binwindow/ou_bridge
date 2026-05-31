@@ -1,0 +1,54 @@
+{
+  "exp_name": "cudnn_default",
+  "sde": {
+    "sde_type": "goub",
+    "lambda_square": 30.0,
+    "T": 100,
+    "schedule": "linear",
+    "eps": 0.005,
+    "sigma_max": 80.0,
+    "sigma_min": 0.002,
+    "sigma_data": 0.5,
+    "rho": 7.0,
+    "num_steps_sampling": 100,
+    "beta_d": 2.0,
+    "beta_min": 0.1
+  },
+  "network": {
+    "architecture": "ConditionalUNet",
+    "in_nc": 3,
+    "out_nc": 3,
+    "nf": 64,
+    "depth": 4
+  },
+  "train": {
+    "total_iterations": 200000,
+    "batch_size": 8,
+    "patch_size": 64,
+    "lr": 0.0001,
+    "min_lr": 1e-06,
+    "optimizer": "AdamW",
+    "weight_decay": 0.01,
+    "beta1": 0.9,
+    "beta2": 0.999,
+    "ema_beta": 0.999,
+    "ema_update_every": 1,
+    "gpu": "8",
+    "use_amp": false,
+    "use_ddp": false,
+    "val_batch_size": 4,
+    "seed": 42,
+    "num_val": 15,
+    "log_every": 100,
+    "loss_type": "l1",
+    "cudnn_deterministic": false
+  },
+  "data": {
+    "dataset": "default",
+    "data_root": "source/DeRain-H",
+    "num_workers": 8,
+    "use_flip": true,
+    "use_rot": true
+  },
+  "output_root": "outputs"
+}

@@ -1,0 +1,19 @@
+2026-05-31 09:32:00 | 
+── cudnn_default ───────────────────────────────────────────────
+  Model:    ConditionalUNet | 137,147,523 params
+  Data:     source/DeRain-H | train: 1254 | val: 100
+  Training: 200000 iters | batch: 8 | patch: 64 | FP32
+  Optim:    AdamW | lr: 0.0001 → 1e-06 (CosineAnnealingLR)
+  EMA:      β=0.999, every 1 step
+  SDE:      goub | GOUB | schedule=linear | λ²=30.0 | NFE=100 | ε=0.005
+  Device:   CUDA:8 (NVIDIA GeForce RTX 3090)
+  Output:   outputs/cudnn_default/
+────────────────────────────────────────────────────────────
+2026-05-31 09:55:37 | Checkpoint saved: ['iter_013333_psnr_14.661.ckpt', 'last.ckpt']
+2026-05-31 09:55:37 | [Val] iter=13333 | PSNR: 14.661 | SSIM: 0.328 | LPIPS: 0.4127 | Best PSNR: 0.000
+2026-05-31 10:17:56 | Checkpoint saved: ['iter_026666_psnr_13.262.ckpt', 'last.ckpt']
+2026-05-31 10:17:56 | [Val] iter=26666 | PSNR: 13.262 | SSIM: 0.380 | LPIPS: 0.3554 | Best PSNR: 14.661
+2026-05-31 10:40:00 | Checkpoint saved: ['iter_040000_psnr_16.400.ckpt', 'last.ckpt']
+2026-05-31 10:40:00 | [Val] iter=40000 | PSNR: 16.400 | SSIM: 0.540 | LPIPS: 0.2114 | Best PSNR: 14.661
+2026-05-31 11:02:04 | Checkpoint saved: ['iter_053333_psnr_19.782.ckpt', 'last.ckpt']
+2026-05-31 11:02:04 | [Val] iter=53333 | PSNR: 19.782 | SSIM: 0.653 | LPIPS: 0.1228 | Best PSNR: 16.400

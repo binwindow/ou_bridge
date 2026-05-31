@@ -25,6 +25,8 @@ def set_seed(seed: int):
     if torch.cuda.is_available():
         torch.cuda.manual_seed(seed)
         torch.cuda.manual_seed_all(seed)
+        torch.backends.cudnn.benchmark = False
+        torch.backends.cudnn.deterministic = True
 
 
 class Trainer:
@@ -54,10 +56,6 @@ class Trainer:
         self.is_main = self.local_rank == 0
 
         set_seed(config.train.seed)
-
-        if config.train.cudnn_deterministic:
-            torch.backends.cudnn.benchmark = False
-            torch.backends.cudnn.deterministic = True
 
         # Output directories
         if self.is_main:
@@ -104,8 +102,11 @@ class Trainer:
             eta_min=config.train.min_lr,
         )
 
-        # AMP (BF16 — same dynamic range as FP32, no GradScaler needed)
-        self.use_amp = config.train.use_amp and self.device.type == "cuda"
+        # Precision: fp32 | fp16 (with GradScaler) | bf16
+        self.precision = config.train.precision
+        self.scaler = torch.amp.GradScaler("cuda", init_scale=128.0,
+                                           growth_interval=500,
+                                           backoff_factor=0.5) if self.precision == "fp16" else None
 
         # DDP wrap
         if self.use_ddp:
@@ -164,6 +165,8 @@ class Trainer:
         cfg = self.config
         self.model.model.train()
 
+        train_start = time.time()
+
         pbar = tqdm(
             total=cfg.train.total_iterations,
             initial=self.current_iteration,
@@ -194,13 +197,22 @@ class Trainer:
             # Optimize
             self.optimizer.zero_grad()
 
-            if self.use_amp:
+            if self.precision == "bf16":
                 with autocast("cuda", dtype=torch.bfloat16):
+                    loss = self.model.optimize_parameters(timesteps, self.sde)
+            elif self.precision == "fp16":
+                with autocast("cuda", dtype=torch.float16):
                     loss = self.model.optimize_parameters(timesteps, self.sde)
             else:
                 loss = self.model.optimize_parameters(timesteps, self.sde)
-            loss.backward()
-            self.optimizer.step()
+
+            if self.scaler:
+                self.scaler.scale(loss).backward()
+                self.scaler.step(self.optimizer)
+                self.scaler.update()
+            else:
+                loss.backward()
+                self.optimizer.step()
 
             # EMA update every step
             self.model.ema.update(self.model.model)
@@ -238,6 +250,12 @@ class Trainer:
         pbar.close()
 
         if self.is_main:
+            elapsed = time.time() - train_start
+            h, m = divmod(elapsed, 3600)
+            m, s = divmod(m, 60)
+            duration_str = f"{int(h)}h {int(m)}m {int(s)}s"
+            self.logger.info(f"Training finished. Total time: {duration_str}")
+            self.logger.log_train({"total_time_hours": round(elapsed / 3600, 2)})
             self.logger.close()
 
     def _validate(self) -> tuple[dict, list]:
@@ -281,7 +299,7 @@ class Trainer:
         total_params = model_info["total_params"]
         train_size = len(self.train_loader.dataset)
         val_size = len(self.val_loader.dataset)
-        amp_status = "BF16" if cfg.train.use_amp else "FP32"
+        precision_str = self.precision.upper()
         gpu_str = os.environ.get("CUDA_VISIBLE_DEVICES", "0")
         device_str = f"CUDA:{gpu_str} ({torch.cuda.get_device_name(0)})" if torch.cuda.is_available() else "CPU"
 
@@ -300,7 +318,7 @@ class Trainer:
             f"── {cfg.exp_name} " + "─" * (60 - len(cfg.exp_name)),
             f"  Model:    {cfg.network.architecture} | {total_params:,} params",
             f"  Data:     {cfg.data.data_root} | train: {train_size} | val: {val_size}",
-            f"  Training: {cfg.train.total_iterations} iters | batch: {cfg.train.batch_size} | patch: {cfg.train.patch_size} | {amp_status}",
+            f"  Training: {cfg.train.total_iterations} iters | batch: {cfg.train.batch_size} | patch: {cfg.train.patch_size} | {precision_str}",
             f"  Optim:    {cfg.train.optimizer} | lr: {cfg.train.lr} → {cfg.train.min_lr} (CosineAnnealingLR)",
             f"  EMA:      β={cfg.train.ema_beta}, every {cfg.train.ema_update_every} step",
             f"  SDE:      {sc.sde_type} | {sde_desc}",

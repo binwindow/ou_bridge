@@ -1,0 +1,29 @@
+2026-05-31 17:50:05 | 
+── precision_bf16 ──────────────────────────────────────────────
+  Model:    ConditionalUNet | 137,147,523 params
+  Data:     source/DeRain-H | train: 1254 | val: 100
+  Training: 200000 iters | batch: 8 | patch: 64 | BF16
+  Optim:    AdamW | lr: 0.0001 → 1e-06 (CosineAnnealingLR)
+  EMA:      β=0.9999, every 1 step
+  SDE:      goub | GOUB | schedule=linear | λ²=30.0 | NFE=100 | ε=0.005
+  Device:   CUDA:6 (NVIDIA GeForce RTX 3090)
+  Output:   outputs/precision_bf16/
+────────────────────────────────────────────────────────────
+2026-05-31 18:11:17 | Checkpoint saved: ['iter_013333_psnr_5.581.ckpt', 'last.ckpt']
+2026-05-31 18:11:17 | [Val] iter=13333 | PSNR: 5.581 | SSIM: 0.002 | LPIPS: 0.9012 | Best PSNR: 0.000
+2026-05-31 18:32:51 | Checkpoint saved: ['iter_026666_psnr_9.392.ckpt', 'last.ckpt']
+2026-05-31 18:32:51 | [Val] iter=26666 | PSNR: 9.392 | SSIM: 0.195 | LPIPS: 0.4881 | Best PSNR: 5.581
+2026-05-31 18:54:44 | Checkpoint saved: ['iter_040000_psnr_9.102.ckpt', 'last.ckpt']
+2026-05-31 18:54:44 | [Val] iter=40000 | PSNR: 9.102 | SSIM: 0.170 | LPIPS: 0.5307 | Best PSNR: 9.392
+2026-05-31 19:16:45 | Checkpoint saved: ['iter_053333_psnr_6.694.ckpt', 'last.ckpt']
+2026-05-31 19:16:45 | [Val] iter=53333 | PSNR: 6.694 | SSIM: 0.016 | LPIPS: 0.8401 | Best PSNR: 9.392
+2026-05-31 19:38:16 | Checkpoint saved: ['iter_066666_psnr_14.745.ckpt', 'last.ckpt']
+2026-05-31 19:38:16 | [Val] iter=66666 | PSNR: 14.745 | SSIM: 0.468 | LPIPS: 0.2864 | Best PSNR: 9.392
+2026-05-31 19:59:37 | Checkpoint saved: ['iter_080000_psnr_15.834.ckpt', 'last.ckpt']
+2026-05-31 19:59:37 | [Val] iter=80000 | PSNR: 15.834 | SSIM: 0.539 | LPIPS: 0.2385 | Best PSNR: 14.745
+2026-05-31 20:21:06 | Checkpoint saved: ['iter_093333_psnr_17.303.ckpt', 'last.ckpt']
+2026-05-31 20:21:06 | [Val] iter=93333 | PSNR: 17.303 | SSIM: 0.591 | LPIPS: 0.1986 | Best PSNR: 15.834
+2026-05-31 20:42:59 | Checkpoint saved: ['iter_106666_psnr_18.051.ckpt', 'last.ckpt']
+2026-05-31 20:42:59 | [Val] iter=106666 | PSNR: 18.051 | SSIM: 0.617 | LPIPS: 0.1833 | Best PSNR: 17.303
+2026-05-31 21:04:44 | Checkpoint saved: ['iter_120000_psnr_18.533.ckpt', 'last.ckpt']
+2026-05-31 21:04:44 | [Val] iter=120000 | PSNR: 18.533 | SSIM: 0.627 | LPIPS: 0.1783 | Best PSNR: 18.051
