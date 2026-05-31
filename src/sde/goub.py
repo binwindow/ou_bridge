@@ -32,16 +32,17 @@ def _cosine_theta_schedule(timesteps, s=0.008):
 
 
 class GOUB(BaseSDE):
-    def __init__(self, lambda_square=30, T=100, schedule='cosine', eps=0.005, device=None):
+    def __init__(self, lambda_square=30, T=100, schedule='cosine', eps=0.01, device=None):
         self.T = T
         self.device = device
         self.lambda_square = lambda_square / 255 if lambda_square >= 1 else lambda_square
         self.schedule = schedule
+        self._eps = eps
         self._initialize()
 
     def _initialize(self):
         L, T = self.lambda_square, self.T
-        eps = getattr(self, '_eps', 0.005)
+        eps = self._eps
         dt = 1 / T
 
         if self.schedule == 'cosine':

@@ -52,6 +52,7 @@ class TrainConfig:
     num_val: int = 15
     log_every: int = 100
     loss_type: str = "l1"
+    max_grad_norm: float = 1.0
 
 
 @dataclass

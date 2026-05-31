@@ -105,6 +105,7 @@ class Trainer:
         # Precision: fp32 | fp16 (with GradScaler) | bf16
         self.precision = config.train.precision
         self.scaler = torch.amp.GradScaler("cuda") if self.precision == "fp16" else None
+        self.max_grad_norm = config.train.max_grad_norm
 
         # DDP wrap
         if self.use_ddp:
@@ -206,10 +207,15 @@ class Trainer:
 
             if self.scaler:
                 self.scaler.scale(loss).backward()
-                self.scaler.step(self.optimizer)
+                self.scaler.unscale_(self.optimizer)
+                grad_norm = torch.nn.utils.clip_grad_norm_(
+                    self.model.model.parameters(), self.max_grad_norm)
+                self.optimizer.step()
                 self.scaler.update()
             else:
                 loss.backward()
+                grad_norm = torch.nn.utils.clip_grad_norm_(
+                    self.model.model.parameters(), self.max_grad_norm)
                 self.optimizer.step()
 
             # EMA update every step
@@ -228,6 +234,7 @@ class Trainer:
                     "iter": self.current_iteration,
                     "loss": loss_val,
                     "lr": current_lr,
+                    "grad_norm": round(grad_norm, 4),
                     "step_time": round(step_time, 4),
                 })
 
