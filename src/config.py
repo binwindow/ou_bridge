@@ -52,6 +52,7 @@ class TrainConfig:
     num_val: int = 15
     log_every: int = 100
     loss_type: str = "l1"
+    cudnn_deterministic: bool = False
 
 
 @dataclass

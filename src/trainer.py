@@ -55,6 +55,10 @@ class Trainer:
 
         set_seed(config.train.seed)
 
+        if config.train.cudnn_deterministic:
+            torch.backends.cudnn.benchmark = False
+            torch.backends.cudnn.deterministic = True
+
         # Output directories
         if self.is_main:
             os.makedirs(config.log_dir, exist_ok=True)

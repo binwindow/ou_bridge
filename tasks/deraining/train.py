@@ -34,6 +34,8 @@ def parse_args():
     parser.add_argument("--data_root", type=str, default="")
     parser.add_argument("--no_amp", action="store_true", help="Disable AMP (use FP32)")
     parser.add_argument("--resume", action="store_true", help="Resume from last checkpoint")
+    parser.add_argument("--cudnn_deterministic", action="store_true",
+                        help="Enable deterministic cuDNN (benchmark=False, deterministic=True)")
     return parser.parse_args()
 
 
@@ -50,6 +52,7 @@ def main():
         config.sde.num_steps_sampling = args.num_steps_sampling
         config.train.num_val = args.num_val
         config.train.ema_beta = args.ema_beta
+        config.train.cudnn_deterministic = args.cudnn_deterministic
     else:
         config = ExperimentConfig(exp_name=args.exp_name)
         config.sde.sde_type = args.sde_type
@@ -61,6 +64,7 @@ def main():
         config.train.gpu = args.gpu
         config.train.ema_beta = args.ema_beta
         config.train.seed = args.seed
+        config.train.cudnn_deterministic = args.cudnn_deterministic
         config.sde.num_steps_sampling = args.num_steps_sampling
         config.train.num_val = args.num_val
         config.data.dataset = args.dataset
