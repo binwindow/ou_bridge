@@ -28,6 +28,4 @@ GPU=2 DATA_ROOT=source/DeRain-H bash scripts/run_bf16.sh
 
 ## 结果可视化
 
-```bash
-python tasks/deraining/precision_ablation/plot.py
-```
+打开 `tasks/deraining/precision_ablation/plot.ipynb` 运行所有 cell 即可。

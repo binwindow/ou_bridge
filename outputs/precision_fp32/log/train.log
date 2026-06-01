@@ -29,3 +29,14 @@
 2026-05-31 21:13:54 | [Val] iter=120000 | PSNR: 23.511 | SSIM: 0.754 | LPIPS: 0.0635 | Best PSNR: 22.373
 2026-05-31 21:36:38 | Checkpoint saved: ['iter_133333_psnr_24.117.ckpt', 'last.ckpt']
 2026-05-31 21:36:38 | [Val] iter=133333 | PSNR: 24.117 | SSIM: 0.767 | LPIPS: 0.0597 | Best PSNR: 23.511
+2026-05-31 21:59:40 | Checkpoint saved: ['iter_146666_psnr_24.271.ckpt', 'last.ckpt']
+2026-05-31 21:59:40 | [Val] iter=146666 | PSNR: 24.271 | SSIM: 0.772 | LPIPS: 0.0574 | Best PSNR: 24.117
+2026-05-31 22:22:21 | Checkpoint saved: ['iter_160000_psnr_24.518.ckpt', 'last.ckpt']
+2026-05-31 22:22:21 | [Val] iter=160000 | PSNR: 24.518 | SSIM: 0.774 | LPIPS: 0.0560 | Best PSNR: 24.271
+2026-05-31 22:45:14 | Checkpoint saved: ['iter_173333_psnr_24.690.ckpt', 'last.ckpt']
+2026-05-31 22:45:14 | [Val] iter=173333 | PSNR: 24.690 | SSIM: 0.777 | LPIPS: 0.0565 | Best PSNR: 24.518
+2026-05-31 23:07:57 | Checkpoint saved: ['iter_186666_psnr_24.777.ckpt', 'last.ckpt']
+2026-05-31 23:07:57 | [Val] iter=186666 | PSNR: 24.777 | SSIM: 0.780 | LPIPS: 0.0531 | Best PSNR: 24.690
+2026-05-31 23:30:47 | Checkpoint saved: ['iter_200000_psnr_24.618.ckpt', 'last.ckpt']
+2026-05-31 23:30:47 | [Val] iter=200000 | PSNR: 24.618 | SSIM: 0.779 | LPIPS: 0.0517 | Best PSNR: 24.777
+2026-05-31 23:30:47 | Training finished. Total time: 5h 40m 49s

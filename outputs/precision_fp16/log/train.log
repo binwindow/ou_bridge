@@ -1,0 +1,15 @@
+2026-05-31 22:35:59 | 
+── precision_fp16 ──────────────────────────────────────────────
+  Model:    ConditionalUNet | 137,147,523 params
+  Data:     source/DeRain-H | train: 1254 | val: 100
+  Training: 200000 iters | batch: 8 | patch: 64 | FP16
+  Optim:    AdamW | lr: 0.0001 → 1e-06 (CosineAnnealingLR)
+  EMA:      β=0.9999, every 1 step
+  SDE:      goub | GOUB | schedule=linear | λ²=30.0 | NFE=100 | ε=0.005
+  Device:   CUDA:1 (NVIDIA GeForce RTX 3090)
+  Output:   outputs/precision_fp16/
+────────────────────────────────────────────────────────────
+2026-05-31 23:03:00 | Checkpoint saved: ['iter_013333_psnr_5.390.ckpt', 'last.ckpt']
+2026-05-31 23:03:00 | [Val] iter=13333 | PSNR: 5.390 | SSIM: -0.002 | LPIPS: 0.8682 | Best PSNR: 0.000
+2026-05-31 23:29:20 | Checkpoint saved: ['iter_026666_psnr_7.817.ckpt', 'last.ckpt']
+2026-05-31 23:29:20 | [Val] iter=26666 | PSNR: 7.817 | SSIM: 0.199 | LPIPS: 0.5356 | Best PSNR: 5.390

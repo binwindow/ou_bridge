@@ -1,0 +1,42 @@
+2026-05-31 23:52:05 | 
+── precision_fp16_bs16 ─────────────────────────────────────────
+  Model:    ConditionalUNet | 137,147,523 params
+  Data:     source/DeRain-H | train: 1254 | val: 100
+  Training: 200000 iters | batch: 16 | patch: 64 | FP16
+  Optim:    AdamW | lr: 0.0001 → 1e-06 (CosineAnnealingLR)
+  EMA:      β=0.9999, every 1 step
+  SDE:      goub | GOUB | schedule=linear | λ²=30.0 | NFE=100 | ε=0.005
+  Device:   CUDA:1 (NVIDIA GeForce RTX 3090)
+  Output:   outputs/precision_fp16_bs16/
+────────────────────────────────────────────────────────────
+2026-06-01 00:28:49 | Checkpoint saved: ['iter_013333_psnr_5.509.ckpt', 'last.ckpt']
+2026-06-01 00:28:49 | [Val] iter=13333 | PSNR: 5.509 | SSIM: -0.002 | LPIPS: 0.9173 | Best PSNR: 0.000
+2026-06-01 01:05:59 | Checkpoint saved: ['iter_026666_psnr_11.830.ckpt', 'last.ckpt']
+2026-06-01 01:05:59 | [Val] iter=26666 | PSNR: 11.830 | SSIM: 0.296 | LPIPS: 0.3720 | Best PSNR: 5.509
+2026-06-01 01:43:40 | Checkpoint saved: ['iter_040000_psnr_18.576.ckpt', 'last.ckpt']
+2026-06-01 01:43:40 | [Val] iter=40000 | PSNR: 18.576 | SSIM: 0.592 | LPIPS: 0.1891 | Best PSNR: 11.830
+2026-06-01 02:21:23 | Checkpoint saved: ['iter_053333_psnr_20.310.ckpt', 'last.ckpt']
+2026-06-01 02:21:23 | [Val] iter=53333 | PSNR: 20.310 | SSIM: 0.648 | LPIPS: 0.1637 | Best PSNR: 18.576
+2026-06-01 02:59:04 | Checkpoint saved: ['iter_066666_psnr_20.505.ckpt', 'last.ckpt']
+2026-06-01 02:59:04 | [Val] iter=66666 | PSNR: 20.505 | SSIM: 0.657 | LPIPS: 0.1629 | Best PSNR: 20.310
+2026-06-01 03:36:50 | Checkpoint saved: ['iter_080000_psnr_20.843.ckpt', 'last.ckpt']
+2026-06-01 03:36:50 | [Val] iter=80000 | PSNR: 20.843 | SSIM: 0.656 | LPIPS: 0.1635 | Best PSNR: 20.505
+2026-06-01 04:14:16 | Checkpoint saved: ['iter_093333_psnr_20.666.ckpt', 'last.ckpt']
+2026-06-01 04:14:16 | [Val] iter=93333 | PSNR: 20.666 | SSIM: 0.652 | LPIPS: 0.1683 | Best PSNR: 20.843
+2026-06-01 04:51:39 | Checkpoint saved: ['iter_106666_psnr_20.557.ckpt', 'last.ckpt']
+2026-06-01 04:51:39 | [Val] iter=106666 | PSNR: 20.557 | SSIM: 0.650 | LPIPS: 0.1706 | Best PSNR: 20.843
+2026-06-01 05:28:59 | Checkpoint saved: ['iter_120000_psnr_20.515.ckpt', 'last.ckpt']
+2026-06-01 05:28:59 | [Val] iter=120000 | PSNR: 20.515 | SSIM: 0.646 | LPIPS: 0.1766 | Best PSNR: 20.843
+2026-06-01 06:06:28 | Checkpoint saved: ['iter_133333_psnr_20.568.ckpt', 'last.ckpt']
+2026-06-01 06:06:28 | [Val] iter=133333 | PSNR: 20.568 | SSIM: 0.643 | LPIPS: 0.1802 | Best PSNR: 20.843
+2026-06-01 06:43:43 | Checkpoint saved: ['iter_146666_psnr_20.370.ckpt', 'last.ckpt']
+2026-06-01 06:43:43 | [Val] iter=146666 | PSNR: 20.370 | SSIM: 0.640 | LPIPS: 0.1818 | Best PSNR: 20.843
+2026-06-01 07:20:50 | Checkpoint saved: ['iter_160000_psnr_20.259.ckpt', 'last.ckpt']
+2026-06-01 07:20:50 | [Val] iter=160000 | PSNR: 20.259 | SSIM: 0.637 | LPIPS: 0.1849 | Best PSNR: 20.843
+2026-06-01 07:57:45 | Checkpoint saved: ['iter_173333_psnr_20.115.ckpt', 'last.ckpt']
+2026-06-01 07:57:45 | [Val] iter=173333 | PSNR: 20.115 | SSIM: 0.632 | LPIPS: 0.1883 | Best PSNR: 20.843
+2026-06-01 08:34:40 | Checkpoint saved: ['iter_186666_psnr_20.113.ckpt', 'last.ckpt']
+2026-06-01 08:34:40 | [Val] iter=186666 | PSNR: 20.113 | SSIM: 0.629 | LPIPS: 0.1913 | Best PSNR: 20.843
+2026-06-01 09:10:28 | Checkpoint saved: ['iter_200000_psnr_19.992.ckpt', 'last.ckpt']
+2026-06-01 09:10:28 | [Val] iter=200000 | PSNR: 19.992 | SSIM: 0.626 | LPIPS: 0.1921 | Best PSNR: 20.843
+2026-06-01 09:10:28 | Training finished. Total time: 9h 18m 23s
