@@ -1,0 +1,11 @@
+2026-06-04 20:48:22 | 
+── precision_bf16_bs16 ─────────────────────────────────────────
+  Model:    ConditionalUNet | 137,147,523 params
+  Data:     /home/lsc/project/dataset/S-CCID | train: 8000 | val: 322
+  Training: 200000 iters | batch: 16 | patch: 64 | BF16
+  Optim:    AdamW | lr: 0.0001 → 1e-06 (CosineAnnealingLR)
+  EMA:      β=0.9999, every 1 step
+  SDE:      goub | GOUB | schedule=linear | λ²=30.0 | NFE=100 | ε=0.005
+  Device:   CUDA:1 (NVIDIA GeForce RTX 3090)
+  Output:   outputs/precision_bf16_bs16/
+────────────────────────────────────────────────────────────

@@ -1,7 +1,8 @@
 #!/bin/bash
 set -e
 DATA_ROOT="${DATA_ROOT:-source/DeRain-H}"
-python tasks/deraining/train.py \
+python tasks/train.py \
+  --output_root outputs/derainh \
   --exp_name sde_ve \
   --sde_type ve \
   --gpu "${GPU:-0}" \

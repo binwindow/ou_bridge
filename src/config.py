@@ -57,7 +57,7 @@ class TrainConfig:
 
 @dataclass
 class DataConfig:
-    dataset: str = "default"
+    dataset: str = "derainh"
     data_root: str = ""
     num_workers: int = 4
     use_flip: bool = True

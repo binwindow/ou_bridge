@@ -1,0 +1,25 @@
+2026-06-04 16:03:50 | 
+── precision_fp32_bs16 ─────────────────────────────────────────
+  Model:    ConditionalUNet | 137,147,523 params
+  Data:     /home/lsc/project/dataset/S-CCID | train: 8000 | val: 322
+  Training: 200000 iters | batch: 16 | patch: 64 | FP32
+  Optim:    AdamW | lr: 0.0001 → 1e-06 (CosineAnnealingLR)
+  EMA:      β=0.9999, every 1 step
+  SDE:      goub | GOUB | schedule=linear | λ²=30.0 | NFE=100 | ε=0.005
+  Device:   CUDA:5 (NVIDIA GeForce RTX 3090)
+  Output:   outputs/precision_fp32_bs16/
+────────────────────────────────────────────────────────────
+2026-06-04 16:43:42 | Checkpoint saved: ['iter_013333_psnr_5.468.ckpt', 'last.ckpt']
+2026-06-04 16:43:42 | [Val] iter=13333 | PSNR: 5.468 | SSIM: 0.008 | LPIPS: 1.2026 | Best PSNR: 0.000
+2026-06-04 17:21:58 | Checkpoint saved: ['iter_026666_psnr_21.613.ckpt', 'last.ckpt']
+2026-06-04 17:21:58 | [Val] iter=26666 | PSNR: 21.613 | SSIM: 0.613 | LPIPS: 0.0492 | Best PSNR: 5.468
+2026-06-04 18:00:18 | Checkpoint saved: ['iter_040000_psnr_23.567.ckpt', 'last.ckpt']
+2026-06-04 18:00:18 | [Val] iter=40000 | PSNR: 23.567 | SSIM: 0.707 | LPIPS: 0.0402 | Best PSNR: 21.613
+2026-06-04 18:38:42 | Checkpoint saved: ['iter_053333_psnr_25.339.ckpt', 'last.ckpt']
+2026-06-04 18:38:42 | [Val] iter=53333 | PSNR: 25.339 | SSIM: 0.740 | LPIPS: 0.0207 | Best PSNR: 23.567
+2026-06-04 19:17:02 | Checkpoint saved: ['iter_066666_psnr_25.816.ckpt', 'last.ckpt']
+2026-06-04 19:17:02 | [Val] iter=66666 | PSNR: 25.816 | SSIM: 0.746 | LPIPS: 0.0164 | Best PSNR: 25.339
+2026-06-04 19:55:30 | Checkpoint saved: ['iter_080000_psnr_26.080.ckpt', 'last.ckpt']
+2026-06-04 19:55:30 | [Val] iter=80000 | PSNR: 26.080 | SSIM: 0.749 | LPIPS: 0.0160 | Best PSNR: 25.816
+2026-06-04 20:33:58 | Checkpoint saved: ['iter_093333_psnr_26.193.ckpt', 'last.ckpt']
+2026-06-04 20:33:58 | [Val] iter=93333 | PSNR: 26.193 | SSIM: 0.751 | LPIPS: 0.0160 | Best PSNR: 26.080

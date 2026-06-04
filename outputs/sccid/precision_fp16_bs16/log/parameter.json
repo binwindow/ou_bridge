@@ -1,0 +1,5 @@
+{
+  "architecture": "ConditionalUNet",
+  "total_params": 137147523,
+  "trainable_params": 137147523
+}

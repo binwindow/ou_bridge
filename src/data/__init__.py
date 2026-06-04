@@ -4,7 +4,7 @@ import numpy as np
 import torch
 from torch.utils.data import DataLoader
 
-from .dataset import PairedImageDataset
+from .dataset import PairedImageDataset, SCCIDDataset
 
 _dataset_registry = {}
 
@@ -39,6 +39,11 @@ def create_dataloader(name, batch_size, num_workers, phase, **kwargs):
                       worker_init_fn=seed_worker, generator=g)
 
 
-@register_dataset("default")
-class DefaultDataset(PairedImageDataset):
+@register_dataset("derainh")
+class DerainHDataset(PairedImageDataset):
+    pass
+
+
+@register_dataset("sccid")
+class SCCID(SCCIDDataset):
     pass
