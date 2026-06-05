@@ -32,3 +32,22 @@
 2026-06-04 19:41:33 | [Val] iter=66666 | PSNR: 21.288 | SSIM: 0.741 | LPIPS: 0.0311 | Best PSNR: 21.681
 2026-06-04 20:24:22 | Checkpoint saved: ['iter_080000_psnr_21.254.ckpt', 'last.ckpt']
 2026-06-04 20:24:22 | [Val] iter=80000 | PSNR: 21.254 | SSIM: 0.742 | LPIPS: 0.0322 | Best PSNR: 21.681
+2026-06-04 21:07:08 | Checkpoint saved: ['iter_093333_psnr_21.081.ckpt', 'last.ckpt']
+2026-06-04 21:07:08 | [Val] iter=93333 | PSNR: 21.081 | SSIM: 0.743 | LPIPS: 0.0334 | Best PSNR: 21.681
+2026-06-04 21:49:47 | Checkpoint saved: ['iter_106666_psnr_20.866.ckpt', 'last.ckpt']
+2026-06-04 21:49:47 | [Val] iter=106666 | PSNR: 20.866 | SSIM: 0.743 | LPIPS: 0.0341 | Best PSNR: 21.681
+2026-06-04 22:32:28 | Checkpoint saved: ['iter_120000_psnr_20.623.ckpt', 'last.ckpt']
+2026-06-04 22:32:28 | [Val] iter=120000 | PSNR: 20.623 | SSIM: 0.743 | LPIPS: 0.0348 | Best PSNR: 21.681
+2026-06-04 23:15:19 | Checkpoint saved: ['iter_133333_psnr_20.427.ckpt', 'last.ckpt']
+2026-06-04 23:15:19 | [Val] iter=133333 | PSNR: 20.427 | SSIM: 0.743 | LPIPS: 0.0354 | Best PSNR: 21.681
+2026-06-04 23:58:07 | Checkpoint saved: ['iter_146666_psnr_20.285.ckpt', 'last.ckpt']
+2026-06-04 23:58:07 | [Val] iter=146666 | PSNR: 20.285 | SSIM: 0.742 | LPIPS: 0.0358 | Best PSNR: 21.681
+2026-06-05 00:40:31 | Checkpoint saved: ['iter_160000_psnr_20.183.ckpt', 'last.ckpt']
+2026-06-05 00:40:31 | [Val] iter=160000 | PSNR: 20.183 | SSIM: 0.742 | LPIPS: 0.0358 | Best PSNR: 21.681
+2026-06-05 01:22:29 | Checkpoint saved: ['iter_173333_psnr_20.083.ckpt', 'last.ckpt']
+2026-06-05 01:22:29 | [Val] iter=173333 | PSNR: 20.083 | SSIM: 0.741 | LPIPS: 0.0360 | Best PSNR: 21.681
+2026-06-05 02:05:29 | Checkpoint saved: ['iter_186666_psnr_19.997.ckpt', 'last.ckpt']
+2026-06-05 02:05:29 | [Val] iter=186666 | PSNR: 19.997 | SSIM: 0.740 | LPIPS: 0.0362 | Best PSNR: 21.681
+2026-06-05 02:48:22 | Checkpoint saved: ['iter_200000_psnr_19.951.ckpt', 'last.ckpt']
+2026-06-05 02:48:22 | [Val] iter=200000 | PSNR: 19.951 | SSIM: 0.740 | LPIPS: 0.0362 | Best PSNR: 21.681
+2026-06-05 02:48:22 | Training finished. Total time: 10h 40m 46s
